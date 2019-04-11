@@ -1,0 +1,151 @@
+body
+{
+	background-color: #e1f7ff;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+#menu li
+{
+	float: left;
+	width: 150px;
+}
+#menu a
+{
+	color: white;
+	text-decoration: none;
+	display: block;
+	height: 30px;
+	margin-top:-10px;
+	padding-top: 10px;
+	text-align: center;
+}
+#menu a:hover 
+{
+  background: #29a0a2e0;
+  color: #333;
+}
+#menu ul
+{
+	padding: 0px;
+	margin: 0px;
+	padding-top: 10px;
+}
+#khung
+{
+	width: 1050px;
+	margin: auto;
+	background-color: #f3f9fb;
+}
+#header
+{
+	height: 130px;
+	background-image: url("hinh/st_logo.jpg");
+	text-align: right;
+}
+#header div
+{
+	padding-top: 70px;
+}
+#header a
+{
+	text-decoration: none;
+	color: #1a71a0;
+}
+#header a:hover
+{
+	color: blue;
+}
+#header input[type=text]
+{
+ 	width: 200px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    background-color: white;
+}
+#menu
+{
+	height: 40px;
+	background-color: #005a7d;
+}
+#center
+{
+	width: 1050px;
+	margin-top: 5px;
+}
+#bottom
+{
+	height: 80px;
+	clear: left;
+	background-color: #006992d1;
+	text-align: right;
+	padding-top: 40px;
+	padding-right: 10px;
+	color: #1c1c77;
+}
+#bottom1
+{
+	margin-bottom: 10px;
+}
+#left
+{
+	width: 770px;
+	height: 910px;
+	float: left;
+	background-color: lightblue;
+}
+#left_1
+{
+	width: 770px;
+	height: 400px;
+	background-color: green;
+}
+#left_2
+{
+	width: 770px;
+	height: 200px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: red;
+}
+#left_3
+{
+	width: 770px;
+	height: 300px;
+	background-color: blue;
+}
+#right
+{
+	width: 270px;
+	height: 910px;
+	float: right;
+	background-color: lightblue;
+}
+#right_1
+{
+	width: 270px;
+	height: 250px;
+	background-color: green;
+}
+#right_2
+{
+	width: 270px;
+	height: 100px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: blue;
+}
+#right_3
+{
+	width: 270px;
+	height: 400px;
+	margin-bottom: 5px;
+	background-color: red;
+}
+#right_4
+{
+	width: 270px;
+	height: 100px;
+	background-color: blue;
+}
