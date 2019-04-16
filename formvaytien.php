@@ -13,21 +13,21 @@ require ("DBconnect.php");
 ?>
 
 
-<form id="form1" name="form1" method="post" action="formchuyentien2.php">
+<form id="form1" name="form1" method="post" action="formvaytien2.php">
   
      	<h2>CHUYỂN TIỀN </h2>
            	  <table width="591" height="177" border="1">
         	    <tr>
         	      <td><strong>LOẠI VAY</strong></td>
         	      <td><label>
-        	            <select name="taikhoanid" id="taikhoanid">
+        	            <select name="kieuvay" id="kieuvay">
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
 						$results_1 = mysqli_query($conn,"SELECT * FROM kieuvay ");
 						while($rowsacc = mysqli_fetch_array($results_1,MYSQLI_ASSOC))
 						{
 							
-							echo "<option value='$rowsacc[kieuvay]'>$rowsacc[kieuvay] $rowsacc[toithieu]->$rowsacc[toida]</option>";
+							echo "<option value='$rowsacc[id_kieuvay]'>$rowsacc[kieuvay] $rowsacc[toithieu]->$rowsacc[toida]</option>";
 						}
 						?>
       	            </select>
@@ -36,7 +36,7 @@ require ("DBconnect.php");
         	    <tr>
         	      <td><strong>SỐ LƯỢNG VAY </strong></td>
         	      <td><label>
-        	        <input type="text" name="pay_amt" id="pay_amt" size="25" />
+        	        <input type="text" name="vay_amt" id="vay_amt" size="25" />
       	        </label></td>
       	      </tr>
         	    <tr>
