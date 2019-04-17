@@ -1,3 +1,7 @@
+<?php
+
+session_start();
+?>
 <!doctype html>
 <html>
 <head>
@@ -22,18 +26,17 @@
 		<?php require("Header.php") ;?>
 	 <?php require ("accmenu.php") ;
 		require ("DBconnect.php");
-		?>
+		 ?>
 	<?php	if(isset($_POST["pay"]))
 {
-    $kieuvay = $_POST["kieuvay"];
-    $vayamt = $_POST["vay_amt"];
-    $taikhoanvay = $_POST["taikhoanid"];
+$_SESSION['nguoinhan'] = $_POST["huongid"];
+$payamt = $_POST["pay_amt"];
+$taikhoanchuyen = $_POST["taikhoanid"];
 	$code = taocode(4);
 	$mail = new guimail("11");
 	$mail->gui($conn,$code);
 	$passerr ="" ;
 	echo $code ;
-	echo $kieuvay;
 }
 	
 ?>
@@ -43,13 +46,30 @@
 
 	$loi = 0 ;
 	   if(isset($_POST["pay2"]))
-  {   $results_3 = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid='11'");
-      $arrpayment1 = mysqli_fetch_assoc($results_3);	
+  {   $sql ="SELECT * FROM khachhang where khachhangid='11'";
+      $results_3 = $control->query($sql);
+      $arrpayment1 = $control->fetch_arr($results_3);
+   
+  
+    
+		
+		
 	if($_POST["trpass"] == $arrpayment1["passchuyenkhoan"] and $_POST["email"] == $_POST["code"])
-	{  
-		$vay = new vaytien($_POST["taikhoanid"]);
-		$a=$vay->vay($conn,$_POST["amt"],$_POST["kieuvay"]);
-		if ($a == 1)header("Location: formchuyentien3.php");
+	{   
+		$tien = new chuyentien($_POST["taikhoanid"]);
+		$tien->setCon($conn);
+		$demnguoinhan = 0 ;
+		$demchuyentienthanhcong = 0 ;
+		foreach  ($_SESSION['nguoinhan'] as $nguoinhan_1){	
+	          if ($nguoinhan_1 != "" ) {
+				  $demnguoinhan++;
+				  echo $nguoinhan_1 ;
+				 $a= $tien->chuyen($nguoinhan_1,$_POST["amt"]);
+				 if ($a == 1) $demchuyentienthanhcong++;					   
+		            }   
+		}
+		if ($demchuyentienthanhcong == $demnguoinhan)header("Location: formchuyentien3.php");
+		            	    	  
 	}
 	else
 	{
@@ -59,23 +79,29 @@
 	if ($_POST["email"] != $_POST["code"])	$err2 = "<b> mã xác nhận email không đúng</b>";
 	$passerr = $err1." ; ".$err2." <br>vui lòng nhập lại";
 
-	$kieuvay = $_POST["kieuvay"];
-	$vayamt = $_POST["amt"];
-	$taikhoanvay = $_POST["taikhoanid"];
+	
+	$payamt = $_POST["amt"];
+	$taikhoanchuyen = $_POST["taikhoanid"];
 	$code = $_POST["code"];
-	}		  
-    }       
-		
-	$results_4 = mysqli_query($conn,"SELECT * FROM kieuvay where id_kieuvay=$kieuvay");
-	$array_4 = mysqli_fetch_assoc($results_4);
-		if ($vayamt < $array_4["toithieu"] or $vayamt > $array_4["toida"]) {
-			$loi++ ;
+	}		
+  }
+      $dem1 =0;
+		$dem2=0;
+		if(isset($_SESSION['nguoinhan']) ){
+		foreach  ($_SESSION['nguoinhan'] as $nguoinhan_1){
+			$dem1++;
+		if ($nguoinhan_1 != "" )$dem2++; 
+			
 		}
+			if ($dem2 == 0) $loi++;
+		}
+		else $loi++;
+		if ($payamt == 0) $loi++; 
 ?>
 	
-   <?php  if ($loi < 1)
+   <?php  if ($loi != 1)
 { ?>
-	<form id="form1" name="form1" method="post" action="formvaytien2.php">     
+	<form id="form1" name="form1" method="post" action="formchuyentientaikhoanhuong2.php">     
      	
               <table width="564" height="220" border="1">
                 <?php
@@ -89,23 +115,40 @@
 				}
 				?>
                 <tr>
-                  <td width="203"><strong>THÔNG TIN VAY</strong></td>
+                  <td width="203"><strong> NGƯỜI NHẬN</strong></td>
                   <td width="322">
 				  <?php
-	$results_4 = mysqli_query($conn,"SELECT * FROM kieuvay where id_kieuvay=$kieuvay");
-	$array_4 = mysqli_fetch_assoc($results_4);
-				echo "<b>&nbsp;KIÊU VAY : </b>".$array_4["kieuvay"];
-				echo "<br><b>&nbsp;SỐ LƯỢNG VAY : </b>".$vayamt;			
-				echo "<br><b>&nbsp;TÀI KHOẢN VAYY : </b>".$taikhoanvay;
+				foreach  ($_SESSION['nguoinhan'] as $nguoinhan_1){
+			
+	             	if ($nguoinhan_1 != "" ){
+                    $sql ="SELECT * FROM taikhoan where taikhoanid=$nguoinhan_1"; 	
+						$resu = $control->query($sql);
+					  $arr = $control->fetch_arr($resu);
+					$sql2 ="SELECT * FROM khachhang where khachhangid=$arr[khachhangid]"; 	
+						$resu2 = $control->query($sql2);
+						$arr2 = $control->fetch_arr($resu2);
+				echo "<br><b>&nbsp;TÊN : </b>".$arr2["ho"]."  ".$arr2["ten"];
+				echo "<br><b>&nbsp;TÀI KHOẢN ID : </b>".$arr["taikhoanid"];			
+				echo "<br><b>&nbsp;TRẠNG THÁI : </b>".$arr2["trangthai"];
+				echo "<br>";		
+				echo "<br>";		
+		            }   
+		            }
+		
 	
                   ?>
                   
-<input type="hidden" name="kieuvay" value="<?php echo $kieuvay; ?>"  />
-<input type="hidden" name="amt" value="<?php echo $vayamt; ?>"  />
-<input type="hidden" name="taikhoanid" value="<?php echo $taikhoanvay; ?>"  />
+<input type="hidden" name="payto3" value="<?php echo $nguoinhan; ?>"  />
+<input type="hidden" name="amt" value="<?php echo $payamt; ?>"  />
+<input type="hidden" name="taikhoanid" value="<?php echo $taikhoanchuyen; ?>"  />
 <input type="hidden" name="code" value="<?php echo $code; ?>"  />					  
 				  </td>
-                </tr>         
+                </tr>
+                <tr>
+                  <td><strong>SỐ TIỀN CHUYỀN</strong></td>
+                  <td>&nbsp;<?php echo number_format($payamt,2); ?></td>
+                </tr>
+                
                 <tr>
                   <td><strong>NHẬP MẬT KHẨU CHUYỂN KHOẢN</strong></td>
                   <td><input name="trpass" type="password" id="trpass" size="35" /></td>
@@ -126,16 +169,7 @@
                 </tr>
               </table>
 		<?php }
-		else {
-			
-		
-		
-		if ($vayamt < $array_4["toithieu"] or $vayamt > $array_4["toida"]) {
-			echo "<br>"."số tiền vay không phù hợp";
-		}	
-			
-			
-		} 
+		else echo " da xay ra loi xin hay kiem tra lai thong tin nhap "; 
 		?>
 		<?php require("Footer.php") ;?>
   </body>

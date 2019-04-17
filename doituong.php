@@ -5,11 +5,8 @@
 			$this->khachhangid = $id ;
 		}
 		public function getid (){
-			return $this->khachhangid."<br>" ;
+			return $this->khachhangid ;
 		}
-		
-
-	 
  }
 ?>
 
@@ -20,12 +17,13 @@
 			$this->khachhangid = $id ;
 		}
 		public function getid (){
-			return $this->khachhangid."<br>" ;
+			return $this->khachhangid ;
 		}
 		function chuyentien($id){
 			$this->khachhangid = $id ;
 		}
-		public function chuyen ($id_nguoinhan,$tienchuyen,$con){
+		public function chuyen ($id_nguoinhan,$tienchuyen){
+			
 			$khach = $this->khachhangid ;
 			$sql1 ="UPDATE taikhoan SET sodu = sodu + $tienchuyen WHERE khachhangid = $id_nguoinhan";
 			$sql2 ="UPDATE taikhoan SET sodu = sodu - $tienchuyen WHERE khachhangid = $khach";
@@ -39,12 +37,12 @@
 				  }
 			if(mysqli_affected_rows($con) == 1)
 				  {
-					$successresult = "Transaction successfull";	
-				    header("Location: formchuyentien3.php");
+					$successresult = 1;	
+
 				  }
 				else
 				  {
-					  $successresult = "Failed to transfer";
+					  $successresult = 0;
 				  }
 			return $successresult;
 		}
@@ -57,7 +55,7 @@
 			$this->khachhangid = $id ;
 		}
 		public function getid (){
-			return $this->khachhangid."<br>" ;
+			return $this->khachhangid;
 		}
 		function guimail($id){
 			$this->khachhangid = $id ;
@@ -93,21 +91,21 @@ function taocode($length) {
 			$this->khachhangid = $id ;
 		}
 		public function getid (){
-			return $this->khachhangid."<br>" ;
+			return $this->khachhangid ;
 		}
 		function vaytien($id){
 			$this->khachhangid = $id ;
 		}
 	  public function vay ($con,$tienvay,$kieuvay){
-		  
-		  $date = date("Y-m-d");
+		  date_default_timezone_set('Asia/Ho_Chi_Minh');
+		  $date = date('d-m-Y');
 		  $khach = $this->khachhangid ;
 		  $results_4 = mysqli_query($con,"SELECT * FROM kieuvay where id_kieuvay=$kieuvay");
 	      $array_4 = mysqli_fetch_assoc($results_4);
 		  $b = $array_4["id_kieuvay"];
 		  $c = $array_4["laixuat"];
 		  $sql1 ="UPDATE taikhoan SET sodu = sodu + $tienvay WHERE khachhangid = $khach";
-          $sql2 ="INSERT INTO vaytien VALUES('',$b,$tienvay,'hangthang',$c,$date,$khach)";
+          $sql2 ="INSERT INTO vaytien VALUES('',$b,$tienvay,'hangthang',$c,now(),$khach)";
           if (!mysqli_query($con,$sql1))
 				  {
 				  die('Error: ' . mysqli_error($con));
@@ -118,14 +116,32 @@ function taocode($length) {
 				  }
 			if(mysqli_affected_rows($con) == 1)
 				  {
-					$successresult = "Transaction successfull";	
-				    header("Location: formchuyentien3.php");
+					$successresult = 1;	
+				  
 				  }
 				else
 				  {
-					  $successresult = "Failed to transfer";
+					  $successresult = 0;
 				  }
 			return $successresult;
 	  }
  }
+?>
+
+
+
+<?php 
+class themtaikhoanhuong extends class_coban{
+	function themtaikhoanhuong ($id){
+		$this->setid($id);
+	}
+	public function them ($con,$id_huong){
+		$a = new control ($con);
+		$a->setCon($con);
+		$idd = $this->getid();
+		$sql = "INSERT INTO taikhoanhuong VALUES('',$id_huong,$idd)";
+		$b = $a->query($sql);
+		if ($b)  header("Location: formchuyentien3.php");
+	}
+}
 ?>

@@ -14,7 +14,7 @@ $loanarray = mysqli_query($conn,"select * from vaytien where khachhangid='11'");
         <th width="132" scope="col"><p>NGÀY BẮT ĐẦU</p></th>
       </tr>
 	 <?php
- while($loan = mysqli_fetch_array($loanarray,MYSQL_ASSOC))
+ while($loan = $control->fetch_arr($loanarray))
 	  {
 echo "
       <tr>

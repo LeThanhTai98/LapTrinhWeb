@@ -22,7 +22,7 @@
 		<?php require("Header.php") ;?>
 	 <?php require ("accmenu.php") ;
 		require ("DBconnect.php");
-		include("doituong.php"); ?>
+		?>
 	<?php	if(isset($_POST["pay"]))
 {
 $nguoinhan = $_POST["payto"];
@@ -42,8 +42,9 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 
 	$loi = 0 ;
 	   if(isset($_POST["pay2"]))
-  {   $results_3 = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid='11'");
-      $arrpayment1 = mysqli_fetch_array($results_3,MYSQL_ASSOC);
+  {   $sql3 = "SELECT * FROM khachhang where khachhangid='11'";
+	  $results_3 = $control->query($sql3);
+      $arrpayment1 = $control->fetch_arr($results_3);
    
    
     
@@ -51,7 +52,9 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 		
 	if($_POST["trpass"] == $arrpayment1["passchuyenkhoan"] and $_POST["email"] == $_POST["code"])
 	{   $tien = new chuyentien($_POST["taikhoanid"]);
-	    $tien->chuyen($_POST["payto3"],$_POST["amt"],$conn);	  
+	    $tien->setCon($conn);
+	    $a = $tien->chuyen($_POST["payto3"],$_POST["amt"]);	  
+	    if ($a == 1) header("Location: formchuyentien3.php");
 	}
 	else
 	{
@@ -67,24 +70,30 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	$code = $_POST["code"];
 	}		  
 }       
-		if(isset($nguoinhan)){
-		$results_1 = mysqli_query($conn,"SELECT * FROM taikhoan where taikhoanid=$nguoinhan");
-			$array = mysqli_fetch_array($results_1,MYSQL_ASSOC);
+		if(isset($nguoinhan) and $nguoinhan != ""){
+		$sql = "SELECT * FROM taikhoan where taikhoanid=$nguoinhan" ;
+		$results_1 = $control->query($sql);
+		$array = $control->fetch_arr($results_1);
 		if (!isset($array["taikhoanid"]))
 		{
+			 echo "loi 1" ;
 		$loi++ ;
 		}
-		else {			
+		else {
+			
 	    $results = mysqli_query($conn,"SELECT * FROM taikhoan where taikhoanid='11'");
         $nguoinhan_1 = $array["khachhangid"];
-	    $results_2 = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid=$nguoinhan_1");	
-	    $arrpayment = mysqli_fetch_array($results_2,MYSQL_ASSOC);
+		$sql2 = "SELECT * FROM khachhang where khachhangid=$nguoinhan_1" ;
+	    $results_2 = $control->query($sql2);	
+	    $arrpayment = $control->fetch_arr($results_2	);
 		}
 		}
-		else $loi++;
+		else {$loi++;
+			  echo "loi 2" ;}
 ?>
 	
-   <?php  if ($loi != 1)
+   <?php echo $loi ;  
+		if ($loi == 0)
 { ?>
 	<form id="form1" name="form1" method="post" action="formchuyentien2.php">     
      	<h2>&nbsp;NGƯỜI NHẬN <?php echo $arrpayment["ho"]."  ".$arrpayment["ten"]; ?></h2>

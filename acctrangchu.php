@@ -27,7 +27,7 @@
 	 <?php if (isset($_GET['ts']))
 				  switch($_GET['ts']) 
 				  {
-					  case "tk" : require("chitiettaikhoan.php");
+					  case "tk" : require("chitietkhachhang.php");
 						  break ;
 					  case "vt" : require("vaytien.php");
 						  break;
