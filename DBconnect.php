@@ -19,7 +19,9 @@ class control {
 	public function fetch_arr($que){
 		return mysqli_fetch_assoc($que);
 	}
-	
+	public function row_affected(){
+		return mysqli_affected_rows($this->getCon());
+	}
 }
 	
 $hostname = 'localhost:3306';
@@ -39,6 +41,7 @@ if (!$conn) {
 <?php 
  class class_coban {
 	 private $khachhangid ;
+	 private $phichuyen ;
 		public function setid($id){
 			$this->khachhangid = $id ;
 		}
@@ -51,6 +54,7 @@ if (!$conn) {
 <?php 
 	class chuyentien extends control {
 		private $khachhangid ;
+		private $phichuyen ;
 		public function setid($id){
 			$this->khachhangid = $id ;
 		}
@@ -60,13 +64,15 @@ if (!$conn) {
 		function chuyentien($id){
 			$this->khachhangid = $id ;
 		}
-		public function chuyen ($id_nguoinhan,$tienchuyen){
+		public function chuyen ($id_nguoinhan,$tienchuyen,$noidung){
 			
 			$khach = $this->khachhangid ;
 			$sql1 ="UPDATE taikhoan SET sodu = sodu + $tienchuyen WHERE taikhoanid = $id_nguoinhan";
 			$sql2 ="UPDATE taikhoan SET sodu = sodu - $tienchuyen WHERE taikhoanid = $khach";
+			$sql3 ="INSERT INTO chuyentien VALUES('',now(),$khach,$id_nguoinhan,$tienchuyen,'$noidung')";
 			$a = $this->query($sql1);
 			$b = $this->query($sql2);
+			$c = $this->query($sql3);
 			if(mysqli_affected_rows($this->getCon()) == 1)
 				  {
 					$successresult = 1;	
@@ -78,6 +84,43 @@ if (!$conn) {
 				  }
 			return $successresult;
 		}
+		public function setphichuyen($tienchuyen){
+			
+			$this->phichuyen = $tienchuyen;											 
+	}
+       public function getphichuyen (){
+		   return $this->phichuyen;	   
+	   }
+		public function trutiennguoichuyen (){
+			$khach = $this->khachhangid ;
+			$sql2 ="UPDATE taikhoan SET sodu = sodu - $this->phichuyen WHERE taikhoanid = $khach";
+			$a = $this->query($sql2);
+			if(mysqli_affected_rows($this->getCon()) == 1)
+				  {
+					$successresult = 1;	
+
+				  }
+				else
+				  {
+					  $successresult = 0;
+				  }
+			return $successresult;
+			
+		}
+		public function trutiennguoinhan ($id_nguoinhan){
+			$sql2 ="UPDATE taikhoan SET sodu = sodu - $this->phichuyen WHERE taikhoanid = $id_nguoinhan";
+			$a = $this->query($sql2);
+			if(mysqli_affected_rows($this->getCon()) == 1)
+				  {
+					$successresult = 1;	
+
+				  }
+				else
+				  {
+					  $successresult = 0;
+				  }
+			return $successresult;
+		}	
 	}
 	?>
 <?php 
@@ -174,6 +217,19 @@ class themtaikhoanhuong extends class_coban{
 		$sql = "INSERT INTO taikhoanhuong VALUES('',$id_huong,$idd)";
 		$b = $a->query($sql);
 		if ($b)  header("Location: formchuyentien3.php");
+	}
+}
+?>
+
+<?php class phichuyentien extends control {
+	
+	public function phichuyen ($sotien){
+		
+			$sql1 = "select phi from phichuyentien where toithieu <= $sotien and toida >= $sotien";
+			$resu = $this->query($sql1);
+			$arr = $this->fetch_arr($resu);
+			return  $arr["phi"];											 
+	
 	}
 }
 ?>

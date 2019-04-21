@@ -48,6 +48,20 @@ require ("DBconnect.php");
       	        </label></td>
       	      </tr>
 	            </tr>
+                  <tr>
+        	      <td><strong>NGƯỜI CHỊU PHÍ CHUYỂN TIỀN </strong></td>
+        	      <td><label>
+        	        
+					  <select name="nguoichiuphi" id="nguoichiuphi">
+                             <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
+        	 			
+							
+							<option value="1"> người chuyển </option>
+						     <option value="2"> người nhận </option>
+						
+      	            </select>
+      	        </label></td>
+      	      </tr>
         	    <tr>
         	      <td><strong>NỘI DUNG GIAO DỊCH </strong></td>
         	      <td><label>

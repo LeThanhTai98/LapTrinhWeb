@@ -33,6 +33,11 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	$mail->gui($conn,$code);
 	$passerr ="" ;
 	echo $code ;
+	$phi = new phichuyentien ($conn);
+	$phi->setCon($conn);
+    $phichuyentien = $phi->phichuyen($payamt);
+	$nguoichiuphi = $_POST["nguoichiuphi"];
+	$noidung = $_POST["noidung"];
 }
 	
 ?>
@@ -53,8 +58,12 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	if($_POST["trpass"] == $arrpayment1["passchuyenkhoan"] and $_POST["email"] == $_POST["code"])
 	{   $tien = new chuyentien($_POST["taikhoanid"]);
 	    $tien->setCon($conn);
-	    $a = $tien->chuyen($_POST["payto3"],$_POST["amt"]);	  
-	    if ($a == 1) header("Location: formchuyentien3.php");
+	    $tien->setphichuyen($_POST["phichuyentien"]);
+	    $a = $tien->chuyen($_POST["payto3"],$_POST["amt"],$_POST["noidung"]);
+	    if ($_POST["nguoichiuphi"] == 1)$b = $tien->trutiennguoichuyen();
+	    else $b = $tien->trutiennguoinhan($_POST["payto3"]);
+	    
+	    if ($a == 1 and $b == 1) header("Location: formchuyentien3.php");
 	}
 	else
 	{
@@ -68,6 +77,9 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	$payamt = $_POST["amt"];
 	$taikhoanchuyen = $_POST["taikhoanid"];
 	$code = $_POST["code"];
+	$phichuyentien = $_POST["phichuyentien"];
+	$nguoichiuphi = $_POST["nguoichiuphi"];
+	$noidung = $_POST["noidung"];
 	}		  
 }       
 		if(isset($nguoinhan) and $nguoinhan != ""){
@@ -85,7 +97,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
         $nguoinhan_1 = $array["khachhangid"];
 		$sql2 = "SELECT * FROM khachhang where khachhangid=$nguoinhan_1" ;
 	    $results_2 = $control->query($sql2);	
-	    $arrpayment = $control->fetch_arr($results_2	);
+	    $arrpayment = $control->fetch_arr($results_2);
 		}
 		}
 		else {$loi++;
@@ -121,14 +133,27 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 <input type="hidden" name="payto3" value="<?php echo $nguoinhan; ?>"  />
 <input type="hidden" name="amt" value="<?php echo $payamt; ?>"  />
 <input type="hidden" name="taikhoanid" value="<?php echo $taikhoanchuyen; ?>"  />
-<input type="hidden" name="code" value="<?php echo $code; ?>"  />					  
+<input type="hidden" name="code" value="<?php echo $code; ?>"  />	
+<input type="hidden" name="phichuyentien" value="<?php echo $phichuyentien; ?>"  />
+<input type="hidden" name="nguoichiuphi" value="<?php echo $nguoichiuphi; ?>"  />
+<input type="hidden" name="noidung" value="<?php echo $noidung; ?>"  />					  
 				  </td>
                 </tr>
                 <tr>
                   <td><strong>SỐ TIỀN CHUYỀN</strong></td>
                   <td>&nbsp;<?php echo number_format($payamt,2); ?></td>
                 </tr>
-                
+                 <tr>
+                  <td><strong>PHÍ CHUYỂN TIỀN </strong></td>
+                  <td>&nbsp;<?php echo number_format($phichuyentien,2); ?>
+				  <?php if ($nguoichiuphi == 1 ) $chiu ="<br><b> người chuyển trả</b>";
+                                  else $chiu = "<br><b>người nhận trả</b>";
+                      echo $chiu ; ?></td>	 
+                </tr>
+				  <tr>
+                  <td><strong>SỐ TIỀN CHUYỀN</strong></td>
+                  <td>&nbsp;<?php echo $noidung; ?></td>
+                </tr>
                 <tr>
                   <td><strong>NHẬP MẬT KHẨU CHUYỂN KHOẢN</strong></td>
                   <td><input name="trpass" type="password" id="trpass" size="35" /></td>

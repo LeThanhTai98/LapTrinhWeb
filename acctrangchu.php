@@ -20,8 +20,8 @@
 		height: 35px; }</style>
 </head>
 	
-<body>
-	<div id="khung">
+<body bgcolor="lightblue" >
+	<div id="khung" >
 	<?php require("Header.php") ;?>
 	 <?php require ("accmenu.php") ;?>
 	 <?php if (isset($_GET['ts']))
@@ -38,6 +38,7 @@
 				  }
 		 else require("soluottaikhoan.php");
 		?>
+		
  <?php require("Footer.php") ;?>
 	</div>
 </body>
