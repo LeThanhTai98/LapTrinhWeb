@@ -21,7 +21,7 @@
 <body>
 	<?php require("Header.php") ;?>
 	 <?php require ("accmenu.php") ;?>
-	<?php require ("formchuyentien.php") ; ?>
+	<?php require ("themtienvaotaikhoantietkiem.php") ; ?>
 	<?php require("Footer.php") ;?>
 </body>
 </html>

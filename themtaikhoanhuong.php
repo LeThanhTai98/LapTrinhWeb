@@ -1,19 +1,32 @@
 
 <?php 
 require ("DBconnect.php");
-	require("doituong.php");
-	    
-		$results = mysqli_query($conn,"SELECT * FROM taikhoan where taikhoanid='11'");
-	while($arrow = mysqli_fetch_array($results,MYSQLI_ASSOC)){
-		$ngaytao = $arrow["ngaytao"];
-		$sodu = $arrow["sodu"];
-		$khachhangid = $arrow["khachhangid"];
-		$trangthai = $arrow["trangthai"];
-	}
+	
+	$passerr="";
 		
 	if (isset($_POST["pay"])){
+		$passerr="";
+		$sql= "select * from taikhoan where taikhoanid = $_POST[id_them]";
+		$c =$control->query($sql);
+		$h = $control->fetch_arr($c);
+		
+		
+		$sql1 = "select taikhoanhuongid from taikhoanhuong where taikhoanhuongid = $_POST[id_them]" ;
+		$d = $control->query($sql1);
+		$j = $control->fetch_arr($d);
+		
+		
+		if($h and !$j){
 		$a = new themtaikhoanhuong('11');
 		$a->them($conn,$_POST["id_them"]);
+	   
+		 
+		}
+		
+			
+		if (!$h)$passerr .= "tài khoản thêm không tồn tại";
+		if ($j) $passerr .= "tài khoản thêm đã có trong dữ liệu";
+ 		
 	}
 ?>
 
@@ -22,7 +35,16 @@ require ("DBconnect.php");
   
      	<h2>THÊM TÀI KHOẢN HƯỞNG </h2>
            	  <table width="591" height="177" border="1">
-        	    
+        	      <?php
+				if($passerr != "")
+				{
+					?>
+                <tr>
+                  <td colspan="2">&nbsp;<?php echo $passerr; ?></td>
+                </tr>
+                <?php
+				}
+				?>
         	    <tr>
         	      <td><strong>TÀI KHOẢN CẦN THÊM </strong></td>
         	      <td><label>

@@ -71,6 +71,7 @@
 		if ($vayamt < $array_4["toithieu"] or $vayamt > $array_4["toida"]) {
 			$loi++ ;
 		}
+		if ($kieuvay == "") $loi++;
 ?>
 	
    <?php  if ($loi < 1)

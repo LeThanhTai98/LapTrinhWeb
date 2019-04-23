@@ -12,7 +12,7 @@ require ("DBconnect.php");
         	    <tr>
         	      <td><strong>SỐ LƯỢNG CHUYỂN </strong></td>
         	      <td><label>
-        	        <input type="text" name="pay_amt" id="pay_amt" size="25" />
+        	        <input type="text" name="pay_amt" id="pay_amt"  />
       	        </label></td>
       	      </tr>
 				  <tr>
