@@ -23,7 +23,7 @@
    		     </tr>
 				 <tr>
      		     <td height="37"> MÃ KHÁCH HÀNG</td>
-     		     <td>&nbsp;<?php echo $ngaytao; ?></td>
+     		     <td>&nbsp;<?php echo $khachhangid; ?></td>
    		     </tr>
      		<tr>
      		     <td height="37"> HỌ TÊN</td>
@@ -36,10 +36,16 @@
      		   <tr>
      		     <td height="39">TRẠNG THÁI</td>
      		     <td>&nbsp;<?php echo $trangthai ; ?></td>
+				 </tr>
+				 <tr>
+     		     <td height="39">NGÀY TẠO</td>
+     		     <td>&nbsp;<?php echo $ngaytao ; ?></td>
+   		     </tr>   
    		     </tr>
 				 <tr>
      		     <td height="39">EMAIL</td>
      		     <td>&nbsp;<?php echo $email ; ?></td>
    		     </tr>
+				 
    		   </table>
 	</div> 

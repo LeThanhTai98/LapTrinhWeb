@@ -6,8 +6,9 @@
 	<title>Ngân Hàng STbank</title>
 	<link rel="stylesheet" type="text/css" href="index.css">
 	<link rel="icon" type="img/ico" href="hinh/logo.ico">
-	<style>	
-	.account{border: solid;
+	
+	<style>.account11{
+		border: solid;
 	border-color: blue;
 	border-width: 1px;
 	background-color: #29a0c7;
@@ -17,7 +18,8 @@
 	border-radius: 50px;
 	color: white;
 	width: 290px;
-		height: 35px; }</style>
+	min-height: 35px;
+	word-wrap: break-word;}</style>
 </head>
 	
 <body bgcolor="lightblue" >
@@ -42,12 +44,14 @@ $passerr="";
 		
 		$sql22 = "select * from taikhoantietkiem where taikhoanid = $_POST[taikhoanid]";
 		$h = $control->query($sql22);
-		$k = @$control->fetch_arr($h);	
+		$k = $control->fetch_arr($h);	
 			
 		if ($i["sodu"] >= $_POST["gui_amt"] and $_POST["gui_amt"] != 0 and !$k){	
 			
-		$sql = "insert into taikhoantietkiem values ('',$_POST[taikhoanid],$_POST[kyhan],$_POST[gui_amt],$_POST[hinhthuc],now(),DATE_ADD(now(),INTERVAL $b[kyhan_so] DAY),$b[laixuat]) ";
-		$a = $control->query($sql);
+		$sql = "INSERT INTO taikhoantietkiem VALUES('',$_POST[taikhoanid],$_POST[kyhan],$_POST[gui_amt],$_POST[hinhthuc],now(),DATE_ADD(
+		now(),INTERVAL $b[kyhan_so] DAY))";
+			
+		$a_resu = $control->query($sql);
 		$c = $control->row_affected();
 		if($c == 1 ) $dem++; 
 		
@@ -55,7 +59,7 @@ $passerr="";
 		$trutien = new chuyentien($_POST["taikhoanid"]);
 		$trutien->setCon($conn);
 		$trutien->setphichuyen($_POST["gui_amt"]);
-		 $trutien->trutiennguoichuyen();
+		$trutien->trutiennguoichuyen();
 		
 		$c = $control->row_affected();
 		if($c == 1 ) $dem++; 
@@ -142,7 +146,7 @@ $passerr="";
 					  <td><label>
 						  <select name="hinhthuc" id="hinhthuc">
 						  <option value="1"> lãi nhập gốc </option>
-						  <option value="2">  lãi trả vào tk tiền gửi thanh toán đến hết hạn trả lãi </option>
+						  
 							  </select>
 						  </label>
 					  </td>

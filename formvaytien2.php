@@ -40,25 +40,52 @@
 		
 	<?php 
 	
-
+  $results_4 = mysqli_query($conn,"SELECT * FROM kieuvay where id_kieuvay=$_POST[kieuvay]");
+	$array_4 = mysqli_fetch_assoc($results_4);
+		
+		
+		
 	$loi = 0 ;
+		
+		
 	   if(isset($_POST["pay2"]))
   {   $results_3 = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid='11'");
       $arrpayment1 = mysqli_fetch_assoc($results_3);	
+   
+   
+   
 	if($_POST["trpass"] == $arrpayment1["passchuyenkhoan"] and $_POST["email"] == $_POST["code"])
-	{  
+		
+		
+		
+	{   $demthanhcong=0;
 		$vay = new vaytien($_POST["taikhoanid"]);
 		$a=$vay->vay($conn,$_POST["amt"],$_POST["kieuvay"]);
-		if ($a == 1)header("Location: formchuyentien3.php");
+		if ($a == 1)$demthanhcong++;
+	 
+	    $sql = "update taikhoan set no = $_POST[amt] +($_POST[amt]*$array_4[laixuat]) where taikhoanid = $_POST[taikhoanid] ";
+	    $resu = $control->query($sql);
+	    $a = $control->row_affected();
+	    if ($a == 1)$demthanhcong++;
+	 
+	 
+	    if ($demthanhcong == 2) header("Location: formchuyentien3.php");
 	}
+   
+   
+   
 	else
 	{
 		$err1 = "";
 		$err2 = "";
+		
+		
 	if ($_POST["trpass"] != $arrpayment1["passchuyenkhoan"]) $err1 = "<b>mật khẩu chuyển khoản không đúng</b>";
 	if ($_POST["email"] != $_POST["code"])	$err2 = "<b> mã xác nhận email không đúng</b>";
 	$passerr = $err1." ; ".$err2." <br>vui lòng nhập lại";
 
+		
+		
 	$kieuvay = $_POST["kieuvay"];
 	$vayamt = $_POST["amt"];
 	$taikhoanvay = $_POST["taikhoanid"];
@@ -93,8 +120,7 @@
                   <td width="203"><strong>THÔNG TIN VAY</strong></td>
                   <td width="322">
 				  <?php
-	$results_4 = mysqli_query($conn,"SELECT * FROM kieuvay where id_kieuvay=$kieuvay");
-	$array_4 = mysqli_fetch_assoc($results_4);
+	
 				echo "<b>&nbsp;KIÊU VAY : </b>".$array_4["kieuvay"];
 				echo "<br><b>&nbsp;SỐ LƯỢNG VAY : </b>".$vayamt;			
 				echo "<br><b>&nbsp;TÀI KHOẢN VAYY : </b>".$taikhoanvay;

@@ -53,20 +53,20 @@ if (!$conn) {
 
 <?php 
 	class chuyentien extends control {
-		private $khachhangid ;
+		private $taikhoanid ;
 		private $phichuyen ;
 		public function setid($id){
-			$this->khachhangid = $id ;
+			$this->taikhoanid = $id ;
 		}
 		public function getid (){
-			return $this->khachhangid ;
+			return $this->taikhoanid ;
 		}
 		function chuyentien($id){
-			$this->khachhangid = $id ;
+			$this->taikhoanid = $id ;
 		}
 		public function chuyen ($id_nguoinhan,$tienchuyen,$noidung){
 			
-			$khach = $this->khachhangid ;
+			$khach = $this->taikhoanid ;
 			$sql1 ="UPDATE taikhoan SET sodu = sodu + $tienchuyen WHERE taikhoanid = $id_nguoinhan";
 			$sql2 ="UPDATE taikhoan SET sodu = sodu - $tienchuyen WHERE taikhoanid = $khach";
 			$sql3 ="INSERT INTO chuyentien VALUES('',now(),$khach,$id_nguoinhan,$tienchuyen,'$noidung')";
@@ -92,7 +92,7 @@ if (!$conn) {
 		   return $this->phichuyen;	   
 	   }
 		public function trutiennguoichuyen (){
-			$khach = $this->khachhangid ;
+			$khach = $this->taikhoanid ;
 			$sql2 ="UPDATE taikhoan SET sodu = sodu - $this->phichuyen WHERE taikhoanid = $khach";
 			$a = $this->query($sql2);
 			if(mysqli_affected_rows($this->getCon()) == 1)
@@ -163,24 +163,24 @@ function taocode($length) {
  class vaytien  {
        private $khachhangid ;
 		public function setid($id){
-			$this->khachhangid = $id ;
+			$this->taikhoanid = $id ;
 		}
 		public function getid (){
-			return $this->khachhangid ;
+			return $this->taikhoanid ;
 		}
 		function vaytien($id){
-			$this->khachhangid = $id ;
+			$this->taikhoanid = $id ;
 		}
 	  public function vay ($con,$tienvay,$kieuvay){
 		  date_default_timezone_set('Asia/Ho_Chi_Minh');
 		  $date = date('d-m-Y');
-		  $khach = $this->khachhangid ;
+		  $khach = $this->taikhoanid ;
 		  $results_4 = mysqli_query($con,"SELECT * FROM kieuvay where id_kieuvay=$kieuvay");
 	      $array_4 = mysqli_fetch_assoc($results_4);
 		  $b = $array_4["id_kieuvay"];
 		  $c = $array_4["laixuat"];
-		  $sql1 ="UPDATE taikhoan SET sodu = sodu + $tienvay WHERE khachhangid = $khach";
-          $sql2 ="INSERT INTO vaytien VALUES('',$b,$tienvay,'hangthang',$c,now(),$khach)";
+		  $sql1 ="UPDATE taikhoan SET sodu = sodu + $tienvay WHERE taikhoanid = $khach";
+          $sql2 ="INSERT INTO vaytien VALUES('',$b,$tienvay,$c,now(),$khach)";
           if (!mysqli_query($con,$sql1))
 				  {
 				  die('Error: ' . mysqli_error($con));

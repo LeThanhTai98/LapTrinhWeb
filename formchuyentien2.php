@@ -51,18 +51,23 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	  $results_3 = $control->query($sql3);
       $arrpayment1 = $control->fetch_arr($results_3);
    
-   
+    $sql11 = "select * from taikhoan where taikhoanid = $_POST[taikhoanid]" ;
+		$j = $control->query($sql11);
+		$i = $control->fetch_arr($j);
     
 		
 		
-	if($_POST["trpass"] == $arrpayment1["passchuyenkhoan"] and $_POST["email"] == $_POST["code"])
-	{   $tien = new chuyentien($_POST["taikhoanid"]);
+	if($_POST["trpass"] == $arrpayment1["passchuyenkhoan"] and $_POST["email"] == $_POST["code"] and		 $i["sodu"] >= $_POST["amt"])
+	{  
+		
+		$tien = new chuyentien($_POST["taikhoanid"]);
 	    $tien->setCon($conn);
 	    $tien->setphichuyen($_POST["phichuyentien"]);
 	    $a = $tien->chuyen($_POST["payto3"],$_POST["amt"],$_POST["noidung"]);
 	    if ($_POST["nguoichiuphi"] == 1)$b = $tien->trutiennguoichuyen();
 	    else $b = $tien->trutiennguoinhan($_POST["payto3"]);
 	    
+	 
 	    if ($a == 1 and $b == 1) header("Location: formchuyentien3.php");
 	}
 	else
@@ -72,7 +77,9 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	if ($_POST["trpass"] != $arrpayment1["passchuyenkhoan"]) $err1 = "<b>mật khẩu chuyển khoản không đúng</b>";
 	if ($_POST["email"] != $_POST["code"])	$err2 = "<b> mã xác nhận email không đúng</b>";
 	$passerr = $err1." ; ".$err2." <br>vui lòng nhập lại";
-
+    if ($i["sodu"] < $_POST["amt"]) $passerr.=" số tiền trong tài khoản không đủ";
+		
+		
 	$nguoinhan = $_POST["payto3"];
 	$payamt = $_POST["amt"];
 	$taikhoanchuyen = $_POST["taikhoanid"];

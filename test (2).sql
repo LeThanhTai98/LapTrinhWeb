@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2019 at 06:48 PM
+-- Generation Time: Apr 24, 2019 at 04:55 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -43,7 +43,9 @@ CREATE TABLE `chuyentien` (
 
 INSERT INTO `chuyentien` (`id_chuyentien`, `ngaytao`, `id_chuyen`, `id_nhan`, `sotien`, `noidung`) VALUES
 (1, '2019-04-20', 11, 22, 1000, ' 123123asdasd'),
-(2, '2019-04-20', 11, 22, 1000, ' DM KHAI MAP NGU BO DSLKJDLKSJDLKJSDLKJDLKSJDLKSJDLKSJDKL@K#@LJ#');
+(2, '2019-04-20', 11, 22, 1000, ' DM KHAI MAP NGU BO DSLKJDLKSJDLKJSDLKJDLKSJDLKSJDLKSJDKL@K#@LJ#'),
+(3, '2019-04-24', 11, 22, 1000, ' daskjdahskj'),
+(4, '2019-04-24', 512, 321, 12333, ' asdasda adadasdas asdasdasd');
 
 -- --------------------------------------------------------
 
@@ -96,8 +98,8 @@ CREATE TABLE `kieuvay` (
 --
 
 INSERT INTO `kieuvay` (`id_kieuvay`, `kieuvay`, `toida`, `toithieu`, `laixuat`, `trangthai`) VALUES
-(1, 'vaythuong', 10000, 10, 10, 'active'),
-(2, 'vayvip', 2000000, 20, 20, 'active');
+(1, 'vaythuong', 10000, 10, 0.1, 'active'),
+(2, 'vayvip', 2000000, 20, 0.2, 'active');
 
 -- --------------------------------------------------------
 
@@ -170,21 +172,20 @@ CREATE TABLE `taikhoan` (
   `trangthai` varchar(25) NOT NULL,
   `ngaytao` date NOT NULL,
   `sodu` double NOT NULL,
-  `no` double DEFAULT NULL,
-  `laixuat` double DEFAULT NULL
+  `no` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `taikhoan`
 --
 
-INSERT INTO `taikhoan` (`id_taikhoan`, `taikhoanid`, `khachhangid`, `trangthai`, `ngaytao`, `sodu`, `no`, `laixuat`) VALUES
-(1, '11', '11', 'moi', '2019-04-07', 408978, 20, 1000),
-(2, '22', '22', 'acive', '2019-04-01', 160000, 0, 0),
-(3, '123', '33', 'active', '2019-04-01', 103000, 0, 0),
-(4, '321', '44', 'active', '2019-04-01', 254000, NULL, NULL),
-(5, '512', '11', 'active', '2019-04-01', 108, NULL, NULL),
-(323, '322', '11', 'active', '2019-04-08', 111041, NULL, NULL);
+INSERT INTO `taikhoan` (`id_taikhoan`, `taikhoanid`, `khachhangid`, `trangthai`, `ngaytao`, `sodu`, `no`) VALUES
+(1, '11', '11', 'active', '2019-04-07', 99695, 44),
+(2, '22', '22', 'acive', '2019-04-01', 158000, 0),
+(3, '123', '33', 'active', '2019-04-01', 103000, 0),
+(4, '321', '44', 'active', '2019-04-01', 266333, 0),
+(5, '512', '11', 'active', '2019-04-01', -2800, 14910),
+(323, '322', '11', 'active', '2019-04-08', 111041, 0);
 
 -- --------------------------------------------------------
 
@@ -213,12 +214,12 @@ INSERT INTO `taikhoanhuong` (`id_taikhoanhuong`, `taikhoanhuongid`, `khachhangid
 
 CREATE TABLE `taikhoantietkiem` (
   `id_tietkiem` int(11) NOT NULL,
-  `taikhoanid` varchar(25) NOT NULL,
-  `kyhangui` int(11) NOT NULL,
-  `tiengui` float NOT NULL,
-  `hinhthuctralai` int(11) NOT NULL,
-  `ngaytao` date NOT NULL,
-  `ngaynhanlai` date NOT NULL
+  `taikhoanid` varchar(25) DEFAULT NULL,
+  `kyhangui` int(11) DEFAULT NULL,
+  `tiengui` float DEFAULT NULL,
+  `hinhthuctralai` int(11) DEFAULT NULL,
+  `ngaytao` date DEFAULT NULL,
+  `ngaynhanlai` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -226,8 +227,7 @@ CREATE TABLE `taikhoantietkiem` (
 --
 
 INSERT INTO `taikhoantietkiem` (`id_tietkiem`, `taikhoanid`, `kyhangui`, `tiengui`, `hinhthuctralai`, `ngaytao`, `ngaynhanlai`) VALUES
-(2, '322', 2, 100, 1, '2019-04-22', '2019-06-21'),
-(5, '512', 1, 1, 1, '2019-04-22', '2019-05-06');
+(12, '11', 1, 11321, 1, '2019-04-24', '2019-05-08');
 
 -- --------------------------------------------------------
 
@@ -277,27 +277,18 @@ CREATE TABLE `vaytien` (
   `vayid` int(25) NOT NULL,
   `kieuvay` varchar(25) NOT NULL,
   `sovay` float NOT NULL,
-  `chuky` varchar(25) NOT NULL,
   `laixuat` float NOT NULL,
   `ngaytao` date NOT NULL,
-  `khachhangid` varchar(25) NOT NULL
+  `taikhoanid` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `vaytien`
 --
 
-INSERT INTO `vaytien` (`vayid`, `kieuvay`, `sovay`, `chuky`, `laixuat`, `ngaytao`, `khachhangid`) VALUES
-(1, 'vaythuong', 100000, 'hangthang', 100, '2019-04-01', '11'),
-(2, 'vaythuong', 2000000, 'hangthang', 2000, '2019-04-02', '11'),
-(4, '2', 31231, 'hangthang', 20, '0000-00-00', '11'),
-(5, '2', 12312, 'hangthang', 20, '0000-00-00', '11'),
-(6, '1', 111, 'hangthang', 10, '0000-00-00', '11'),
-(7, '1', 123, 'hangthang', 10, '0000-00-00', '11'),
-(8, '1', 123, 'hangthang', 10, '2019-04-16', '11'),
-(9, '1', 123, 'hangthang', 10, '2019-04-17', '11'),
-(10, '1', 123, 'hangthang', 10, '2019-04-17', '11'),
-(11, '2', 30, 'hangthang', 20, '2019-04-23', '11');
+INSERT INTO `vaytien` (`vayid`, `kieuvay`, `sovay`, `laixuat`, `ngaytao`, `taikhoanid`) VALUES
+(12, '1', 40, 0.1, '2019-04-24', '11'),
+(13, '2', 12425, 0.2, '2019-04-24', '512');
 
 --
 -- Indexes for dumped tables
@@ -376,7 +367,6 @@ ALTER TABLE `trano`
 --
 ALTER TABLE `vaytien`
   ADD PRIMARY KEY (`vayid`),
-  ADD KEY `khachhangid` (`khachhangid`),
   ADD KEY `vayid` (`vayid`);
 
 --
@@ -387,7 +377,7 @@ ALTER TABLE `vaytien`
 -- AUTO_INCREMENT for table `chuyentien`
 --
 ALTER TABLE `chuyentien`
-  MODIFY `id_chuyentien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_chuyentien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `khachhang`
@@ -429,7 +419,7 @@ ALTER TABLE `taikhoanhuong`
 -- AUTO_INCREMENT for table `taikhoantietkiem`
 --
 ALTER TABLE `taikhoantietkiem`
-  MODIFY `id_tietkiem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_tietkiem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `thenganhang`
@@ -441,7 +431,7 @@ ALTER TABLE `thenganhang`
 -- AUTO_INCREMENT for table `vaytien`
 --
 ALTER TABLE `vaytien`
-  MODIFY `vayid` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `vayid` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

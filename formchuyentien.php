@@ -28,7 +28,7 @@ require ("DBconnect.php");
         	    <tr>
         	      <td><strong>SỐ LƯỢNG CHUYỂN </strong></td>
         	      <td><label>
-        	        <input type="text" name="pay_amt" id="pay_amt" size="25" />
+        	        <input type="number" name="pay_amt" id="pay_amt" size="25" />
       	        </label></td>
       	      </tr>
         	    <tr>
@@ -37,7 +37,7 @@ require ("DBconnect.php");
         	        <select name="taikhoanid" id="taikhoanid">
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$results_1 = mysqli_query($conn,"SELECT * FROM taikhoan where taikhoanid='11'");
+						$results_1 = mysqli_query($conn,"SELECT * FROM taikhoan where khachhangid='11'");
 						while($rowsacc = mysqli_fetch_array($results_1,MYSQLI_ASSOC))
 						{
 							

@@ -41,6 +41,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	$phi->setCon($conn);
     $phichuyentien = $phi->phichuyen($payamt);
 	$nguoichiuphi = $_POST["nguoichiuphi"];
+	$noidung = $_POST["noidung"];
 }
 	
 ?>
@@ -70,7 +71,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	          if ($nguoinhan_1 != "" ) {
 				  $demnguoinhan++;
 				  echo $nguoinhan_1 ;
-				 $a= $tien->chuyen($nguoinhan_1,$_POST["amt"]);
+				 $a= $tien->chuyen($nguoinhan_1,$_POST["amt"],$_POST["noidung"]);
 				 if ($a == 1) $demchuyentienthanhcong++;	
 				 if ($_POST["nguoichiuphi"] == 1)$b = $tien->trutiennguoichuyen();
 	             else $b = $tien->trutiennguoinhan($nguoinhan_1);   
@@ -94,6 +95,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	$code = $_POST["code"];
 	$phichuyentien = $_POST["phichuyentien"];
 	$nguoichiuphi = $_POST["nguoichiuphi"];
+		$noidung = $_POST["noidung"];
 	}		
   /* ngoac cua pay2*/}
       $dem1 =0;
@@ -155,7 +157,8 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 <input type="hidden" name="taikhoanid" value="<?php echo $taikhoanchuyen; ?>"  />
 <input type="hidden" name="code" value="<?php echo $code; ?>"  />	
 <input type="hidden" name="phichuyentien" value="<?php echo $phichuyentien; ?>"  />
-<input type="hidden" name="nguoichiuphi" value="<?php echo $nguoichiuphi; ?>"  />						  
+<input type="hidden" name="nguoichiuphi" value="<?php echo $nguoichiuphi; ?>"  />						  <input type="hidden" name="noidung" value="<?php echo $noidung; ?>"  />					  
+
 				  </td>
                 </tr>
                 <tr>
