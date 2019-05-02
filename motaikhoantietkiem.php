@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -98,7 +103,7 @@ $passerr="";
         	        <select name="taikhoanid" id="taikhoanid" >
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$sql = "SELECT * FROM taikhoan where khachhangid='11'" ;
+						$sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid] and trangthai = 2" ;
 						
 						$results_1 = $control->query($sql);
 						

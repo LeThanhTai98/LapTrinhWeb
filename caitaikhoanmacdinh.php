@@ -1,4 +1,4 @@
-
+<?php session_start(); ?>
 	
 <?php 
 require ("DBconnect.php");
@@ -6,10 +6,14 @@ require ("DBconnect.php");
 		
 		
 	if (isset($_POST["pay"])){
-		$sql = "UPDATE khachhang SET taikhoanmacdinh = $_POST[taikhoanid] where khachhangid = '11'";
+		$sql = "UPDATE khachhang SET taikhoanmacdinh = $_POST[taikhoanid] where khachhangid = $_SESSION[khachhangid]";
 		$a = $control->query($sql);
-		if ($control->row_affected() == 1) echo "success";
+		if ($control->row_affected() == 1) {
+			$_SESSION["taikhoanid"] = $_POST["taikhoanid"];
+			echo "success";
+		}
 	}
+		
 ?>
 
 
@@ -24,7 +28,7 @@ require ("DBconnect.php");
         	        <select name="taikhoanid" id="taikhoanid" >
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$sql = "SELECT * FROM taikhoan where khachhangid='11'" ;
+						$sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid]" ;
 						
 						$results_1 = $control->query($sql);
 						

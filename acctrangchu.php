@@ -36,6 +36,9 @@
 						  break;
 					  case "tn"	: require ("trano.php");  
 						  break;
+					  case "md" : require("caitaikhoanmacdinh.php");
+						  break;
+						  
 					  case "dstk" : require("danhsachtaikhoan.php");
 						  break ;
 					  case "ctkh" : require("chitietkhachhang.php");
@@ -53,7 +56,15 @@
 						  break;
 					  case "tk3":  require("ruttientaikhoantietkiem.php");
 						  break;
-						 
+					  case "dp" : require("doipass.php");
+						 break;
+					  case "th1" : require("chuyentientuthevaotaikhoan.php");
+						  break ;
+					  case "th2" : require("chuyentienvaothe.php");
+						  break ;
+					  case "th0" : require("danhsachthe.php");
+						  break;
+						  
 				  }
 		 else require("soluottaikhoan.php");
 		?>

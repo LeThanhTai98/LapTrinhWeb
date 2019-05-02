@@ -1,15 +1,9 @@
-
+<?php session_start(); ?>
 <?php 
 require ("DBconnect.php");
 	
 	    
-		$results = mysqli_query($conn,"SELECT * FROM taikhoan where taikhoanid='11'");
-	while($arrow = mysqli_fetch_array($results,MYSQLI_ASSOC)){
-		$ngaytao = $arrow["ngaytao"];
-		$sodu = $arrow["sodu"];
-		$khachhangid = $arrow["khachhangid"];
-		$trangthai = $arrow["trangthai"];
-	}
+		
 		
 ?>
 
@@ -37,7 +31,7 @@ require ("DBconnect.php");
         	        <select name="taikhoanid" id="taikhoanid">
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$results_1 = mysqli_query($conn,"SELECT * FROM taikhoan where khachhangid='11'");
+						$results_1 = mysqli_query($conn,"SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid] and trangthai = 2");
 						while($rowsacc = mysqli_fetch_array($results_1,MYSQLI_ASSOC))
 						{
 							
@@ -71,7 +65,7 @@ require ("DBconnect.php");
       	      </tr>
         	    <tr>
         	      <td colspan="2"><div align="right">
-        	        <input type="submit" name="pay" id="pay" value="ĐỒNG Ý" />
+        	        <input type="submit" name="pay" id="pay" value="TIẾP THEO" />
         	      </div></td>
        	        </tr>
       	    </table>

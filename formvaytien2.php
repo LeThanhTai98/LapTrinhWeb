@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -29,7 +34,7 @@
     $vayamt = $_POST["vay_amt"];
     $taikhoanvay = $_POST["taikhoanid"];
 	$code = taocode(4);
-	$mail = new guimail("11");
+	$mail = new guimail($_SESSION["khachhangid"]);
 	$mail->gui($conn,$code);
 	$passerr ="" ;
 	echo $code ;
@@ -49,7 +54,7 @@
 		
 		
 	   if(isset($_POST["pay2"]))
-  {   $results_3 = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid='11'");
+  {   $results_3 = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid=$_SESSION[khachhangid]");
       $arrpayment1 = mysqli_fetch_assoc($results_3);	
    
    

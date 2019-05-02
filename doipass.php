@@ -1,12 +1,4 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Untitled Document</title>
-</head>
-
-
-	
+<?php session_start(); ?>
 <?php 
 require ("DBconnect.php");
 	    
@@ -14,11 +6,11 @@ require ("DBconnect.php");
 		
 	if (isset($_POST["pay"])){
 		$passerr = "";
-		$sql = "select * from khachhang  where khachhangid = '11'";
+		$sql = "select * from khachhang  where khachhangid =$_SESSION[khachhangid]";
 		$a = $control->query($sql);
 		$b = $control->fetch_arr($a);
 	 if($_POST["pass"] == $b["pass"] and $_POST["email"] == $_POST["code"] and $_POST["passmoi"]==$_POST["passlai"]){	
-		 $sql = "UPDATE khachhang SET pass = $_POST[passmoi] where khachhangid = '11'";
+		 $sql = "UPDATE khachhang SET pass = $_POST[passmoi] where khachhangid = $_SESSION[khachhangid]";
 		$a = $control->query($sql);
 		if ($control->row_affected() == 1)header("Location: formchuyentien3.php");
 		else echo "co gi sai";																						
@@ -37,7 +29,7 @@ require ("DBconnect.php");
 		$passerr = "";
 		$code = taocode(4);
 		$mail = new guimail("11");
-	$mail->gui($conn,$code);
+	@$mail->gui($conn,$code);
 		echo $code;
 	}
 ?>
@@ -85,5 +77,3 @@ require ("DBconnect.php");
        	        </tr>
       	    </table>
 
-</body>
-</html>

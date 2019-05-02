@@ -1,8 +1,10 @@
+<?php session_start(); ?>
+	
 <?php require("DBconnect.php") ;?>
 	
 	<?php 
 	   
-		$results = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid='11'");
+		$results = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid=$_SESSION[khachhangid]");
 	while($arrow = mysqli_fetch_array($results,MYSQLI_ASSOC)){
 		$ngaytao = $arrow["ngaytao"];
 		$ho = $arrow["ho"];

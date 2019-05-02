@@ -1,15 +1,22 @@
+<?php
 
+session_start();
+?>
 	
 <?php 
 require ("DBconnect.php");
 	$passerr="";
 	 $dem = 0 ;
-   $sql = "SELECT * FROM taikhoantietkiem where taikhoanid='11'" ;				
+   if(isset($_POST["taikhoan"])) $taikhoanid = $_POST["taikhoan"];
+   else $taikhoanid = $_SESSION[taikhoanid]; 
+
+
+   $sql = "SELECT * FROM taikhoantietkiem where taikhoanid=$taikhoanid" ;				
    $results_1 = $control->query($sql);			
    if($rowsacc = $control->fetch_arr($results_1))
 	{
 	$passerr="";
-		$sql11 = "select * from taikhoantietkiem where taikhoanid = '11'" ;
+		$sql11 = "select * from taikhoantietkiem where taikhoanid = $taikhoanid" ;
 		$q = $control->query($sql11);
 		$p = $control->fetch_arr($q);
 	    
@@ -29,8 +36,10 @@ require ("DBconnect.php");
 	
 	
 	if (isset($_POST["pay"])){
+		
+		$kt = 0;
 		$demthanhcong=0;
-		$sql11 = "update taikhoan set sodu = sodu + $p[tiengui] where taikhoanid = '11'" ;
+		$sql11 = "update taikhoan set sodu = sodu + $p[tiengui] where taikhoanid = $taikhoanid" ;
 		$j = $control->query($sql11);
 		$i = $control->row_affected();
 		if ($i == 1) $demthanhcong++;
@@ -39,29 +48,68 @@ require ("DBconnect.php");
 		
        if (strtotime($thatday) <= strtotime($today)){
 		 $laixuat =  $p["tiengui"]*$n["laixuat"];     
-		 $sql11 = "update taikhoan set sodu = sodu +$laixuat where taikhoanid = '11' " ;
+		 $sql11 = "update taikhoan set sodu = sodu +$laixuat where taikhoanid = $taikhoanid " ;
 		 $j = $control->query($sql11);
 		 $i = $control->row_affected();
 		 if ($i == 1) $demthanhcong++;
-		
+		 $kt = 1;
 	   }
 		
 		
 		
- 		$sql11 = "delete from taikhoantietkiem where taikhoanid = '11'" ;
+ 		$sql11 = "delete from taikhoantietkiem where taikhoanid = $taikhoanid" ;
 		$j = $control->query($sql11);
 		$i = $control->row_affected();
 		if ($i == 1) $demthanhcong++;
-		if ($demthanhcong == 2 or $demthanhcong ==3) header("Location: formchuyentien3.php");
+		if ($kt == 1 and $demthanhcong == 3 ) header("Location: formchuyentien3.php");
+		if ($demthanhcong == 2 ) header("Location: formchuyentien3.php");
 	}
    }
 	 else $dem=1 ;
 ?>
 
-<?php if ($dem != 1) { ?>
+
+
+
+ <form id="form2" name="form2" method="post" action="">
+	  <table>
+			<tr>
+        	      <td><strong>CHỌN TÀI KHOẢN  </strong></td>
+        	   <td><label>
+        	       <select name="taikhoan" id="taikhoan"  onchange="form2.submit()" > 
+					        <option value="11">tài khoản mặc định &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
+				   <?php  
+					    $sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid] and trangthai = 2" ;				
+                        $results_1 = $control->query($sql);			
+                        
+					  while ($rowsacc = $control->fetch_arr($results_1)){
+						  if (isset($_POST["id_tietkiem"])) echo $_POST["taikhoan"] ;
+					     ?>
+				   <option value="<?php echo $rowsacc["taikhoanid"];?>" <?php 
+						  
+						  if (isset($_POST["taikhoan"]) and $_POST["taikhoan"] == $rowsacc['taikhoanid']) echo "selected ='selected'" ;?> > 
+					   
+					   <?php echo $rowsacc["taikhoanid"] ?>
+					   
+					   </option>
+					   
+					   
+					 <?php }  ?>
+				   </select>
+				   
+				   
+      	           
+      	        </label></td>
+      	      </tr>  
+			  
+			  </table>
+	</form>
+
+
 <form id="form1" name="form1" method="post" action="">
   
      	<h2>TÀI KHOẢN TIẾT KIỆM </h2>
+	  <?php if ($dem != 1) { ?>    
            	  <table width="591" height="177" border="1">
         	      <?php
 				if($passerr != "")
@@ -116,6 +164,7 @@ require ("DBconnect.php");
 				  </tr>
         	    <tr>
         	      <td colspan="2"><div align="right">
+					  <input type="hidden" name="taikhoan" value=" <?php echo $taikhoanid ?>">
         	        <input type="submit" name="pay" id="pay" value="ĐỒNG Ý" />
         	      </div></td>
        	        </tr>

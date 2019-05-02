@@ -1,4 +1,7 @@
+<?php session_start(); ?>
+
 <!doctype html>
+
 <html>
 <head>
 <meta charset="utf-8">
@@ -29,7 +32,7 @@ $nguoinhan = $_POST["payto"];
 $payamt = $_POST["pay_amt"];
 $taikhoanchuyen = $_POST["taikhoanid"];
 	$code = taocode(4);
-	$mail = new guimail("11");
+	$mail = new guimail($_SESSION["khachhangid"]);
 	$mail->gui($conn,$code);
 	$passerr ="" ;
 	echo $code ;
@@ -47,7 +50,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 
 	$loi = 0 ;
 	   if(isset($_POST["pay2"]))
-  {   $sql3 = "SELECT * FROM khachhang where khachhangid='11'";
+  {   $sql3 = "SELECT * FROM khachhang where khachhangid=$_SESSION[khachhangid]";
 	  $results_3 = $control->query($sql3);
       $arrpayment1 = $control->fetch_arr($results_3);
    

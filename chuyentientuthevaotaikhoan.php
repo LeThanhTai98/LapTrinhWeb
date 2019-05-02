@@ -1,5 +1,12 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
 
-	<?php session_start(); ?>
+<body>
+	
 	
 <?php 
 require ("DBconnect.php");
@@ -15,29 +22,30 @@ require ("DBconnect.php");
    
 	if (isset($_POST["pay"])){
 		
-		$sql11 = "select * from taikhoan where taikhoanid = $_POST[taikhoanid]" ;
+		$sql11 = "select * from taikhoan where taikhoanid = $_POST[taikhoanid] and trangthai = 2" ;
 		$j = @$control->query($sql11);
 		$i = @$control->fetch_arr($j);
 		
 		
 		
-		$sql11 = "select * from thenganhang where thenganhangid = $_POST[theid]" ;
-		$k = @$control->query($sql11);
-		$l = @$control->fetch_arr($k);
+		$sql12 = "select * from thenganhang where thenganhangid = $_POST[theid]";
+		$k = $control->query($sql12);
+		$l = $control->fetch_arr($k);
+		
 		
 		
 		if ($i and $l ){
 			
-			
-		if ($i["sodu"] >= $_POST["gui_amt"] and $_POST["gui_amt"] != 0 ){
+				
+		if ($l["sodu"] >= $_POST["gui_amt"] and $_POST["gui_amt"] != 0 ){
 		$demthanhcong= 0;
 			
-		$sql1 = "update thenganhang set sodu = sodu + $_POST[gui_amt] where thenganhangid = $_POST[theid]" ;
+		$sql1 = "update thenganhang set sodu = sodu - $_POST[gui_amt] where thenganhangid = $_POST[theid]" ;
 		$d = $control->query($sql1);
 	    $c = $control->row_affected();
 		if($c == 1 ) $demthanhcong++; 	
 		
-		$sql10 = "update taikhoan set sodu = sodu - $_POST[gui_amt] where taikhoanid = $_POST[taikhoanid]" ;	
+		$sql10 = "update taikhoan set sodu = sodu + $_POST[gui_amt] where taikhoanid = $_POST[taikhoanid]" ;	
 		$d1 = $control->query($sql10);
 	    $c1 = $control->row_affected();
 		if($c1 == 1 ) $demthanhcong++; 	
@@ -48,8 +56,9 @@ require ("DBconnect.php");
 		}
 		
 			
-		if ($i["sodu"] < $_POST["gui_amt"]) $passerr .= "số tiền trong tài khoản không đủ";
+		if ($l["sodu"] < $_POST["gui_amt"]) $passerr .= "số tiền trong thẻ không đủ";
 		if ($_POST["gui_amt"] == 0) $passerr .= "chưa nhập số tiền gửi";
+			
 		}
 		
 		else  {
@@ -69,7 +78,7 @@ else $dem = 1 ;
 <?php if ($dem != 1){ ?>
 <form id="form1" name="form1" method="post" action="">
   
-     	<h2>CHUYỂN TIỀN VÀO THẺ </h2>
+     	<h2>CHUYỂN TIỀN VÀO TÀI KHOẢN </h2>
            	  <table width="591" height="177" border="1">
         	      <?php
 				if($passerr != "")
@@ -87,7 +96,7 @@ else $dem = 1 ;
         	        <select name="theid" id="theid"   >
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$sql = "SELECT * FROM thenganhang where khachhangid=$_SESSION[khachhangid]" ;
+						$sql = "SELECT * FROM thenganhang where khachhangid=$_SESSION[khachhangid] " ;
 						
 						$results_1 = $control->query($sql);
 						
@@ -107,7 +116,7 @@ else $dem = 1 ;
         	        <select name="taikhoanid" id="taikhoanid"   >
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid] and trangthai = 2" ;
+						$sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[taikhoanid] and trangthai = 2 " ;
 						
 						$results_1 = $control->query($sql);
 						
@@ -142,3 +151,6 @@ else $dem = 1 ;
 	
 	
 	?>
+
+</body>
+</html>

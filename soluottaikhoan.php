@@ -1,15 +1,25 @@
+<?php
+
+session_start();
+?>
+	
 
 	<?php require("DBconnect.php") ;?>
 	
 	<?php 
+          $sql = "select * from khachhang where khachhangid = $_SESSION[khachhangid]" ;
+         $resu = $control->query($sql);
+         $arr = $control->fetch_arr($resu);
+
+
 	    
-		$results = mysqli_query($conn,"SELECT * FROM taikhoan where taikhoanid='11'");
+		$results = mysqli_query($conn,"SELECT * FROM taikhoan where taikhoanid= $arr[taikhoanmacdinh]");
 	while($arrow = mysqli_fetch_array($results,MYSQLI_ASSOC)){
 		$ngaytao = $arrow["ngaytao"];
 		$sodu = $arrow["sodu"];
 		$khachhangid = $arrow["khachhangid"];
 		$trangthai = $arrow["trangthai"];
-		$taikhoanid = '11';
+		$taikhoanid = $arrow["taikhoanid"];
 		$i = 1;
 	}
 	?>		
@@ -33,4 +43,41 @@
    		     </tr> 
    		   </table>
 		
+	</div> 
+
+<div align="center" >
+	
+     		 <h2>&nbsp;GIAO DỊCH GẦN ĐÂY</h2>
+     		 <table width="560" border="1"  align="center">
+     		   <tr >
+     		     <th  width="105" scope="col"> ID</th>      
+                 <th width="105" scope="col">NGÀY TẠO</th>
+                 <th width="93" scope="col">NGƯỜI CHUYỂN</th>
+                 <th width="101" scope="col">NGƯỜI NHẬN</th>
+                 <th width="144" scope="col">SỐ TIỀN</th>
+                  <th width="144" scope="col">NỘI DUNG</th>
+      </tr>
+				<?php
+				 $sql ="SELECT * FROM chuyentien where id_nhan = $_SESSION[taikhoanid] or id_chuyen = $_SESSION[taikhoanid] order by ngaytao desc limit 0,3";
+					 $results = $control->query($sql);
+				 while($taikhoan = $control->fetch_arr($results)){
+					 
+					
+					 
+					 echo "
+                   <tr>
+                    <td>&nbsp;$taikhoan[id_chuyentien]</td>     
+                    <td>&nbsp;$taikhoan[ngaytao]</td>
+                    <td>&nbsp;$taikhoan[id_chuyen]</td>
+                    <td>&nbsp;$taikhoan[id_nhan]</td>
+                    <td>&nbsp;$taikhoan[sotien]</td>
+                     <td>&nbsp;$taikhoan[noidung]</td>
+                  </tr>";
+	  }
+				 
+				 
+				 
+				 
+				 ?> 
+   		   </table>
 	</div> 

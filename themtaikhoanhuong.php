@@ -1,4 +1,7 @@
+<?php
 
+session_start();
+?>
 <?php 
 require ("DBconnect.php");
 	
@@ -16,7 +19,7 @@ require ("DBconnect.php");
 		$j = $control->fetch_arr($d);
 		
 		
-		if($h and !$j){
+		if($h and !$j and $h["trangthai"] == 2){
 		$a = new themtaikhoanhuong('11');
 		$a->them($conn,$_POST["id_them"]);
 	   
@@ -26,6 +29,7 @@ require ("DBconnect.php");
 			
 		if (!$h)$passerr .= "tài khoản thêm không tồn tại";
 		if ($j) $passerr .= "tài khoản thêm đã có trong dữ liệu";
+		if ($h["trangthai"] == 1 ) $passerr .= "tài khoản hiện không hoạt động";
  		
 	}
 ?>

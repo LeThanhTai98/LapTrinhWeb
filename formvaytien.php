@@ -1,8 +1,12 @@
+<?php
+
+session_start();
+?>
 <?php 
 require ("DBconnect.php");
 	
 	    
-		$results = mysqli_query($conn,"SELECT * FROM taikhoan where khachhangid='11'");
+		$results = mysqli_query($conn,"SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid]");
 	while($arrow = mysqli_fetch_array($results,MYSQLI_ASSOC)){
 		$ngaytao = $arrow["ngaytao"];
 		$sodu = $arrow["sodu"];
@@ -15,7 +19,7 @@ require ("DBconnect.php");
 
 <form id="form1" name="form1" method="post" action="formvaytien2.php">
   
-     	<h2>CHUYỂN TIỀN </h2>
+     	<h2>VAY</h2>
            	  <table width="591" height="177" border="1">
         	    <tr>
         	      <td><strong>LOẠI VAY</strong></td>
@@ -45,7 +49,7 @@ require ("DBconnect.php");
         	        <select name="taikhoanid" id="taikhoanid">
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$results_1 = mysqli_query($conn,"SELECT * FROM taikhoan where khachhangid='11'");
+						$results_1 = mysqli_query($conn,"SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid] and trangthai = 2 and no = 0");
 						while($rowsacc = mysqli_fetch_array($results_1,MYSQLI_ASSOC))
 						{
 							

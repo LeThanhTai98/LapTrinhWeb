@@ -33,7 +33,7 @@ $_SESSION['nguoinhan'] = $_POST["huongid"];
 $payamt = $_POST["pay_amt"];
 $taikhoanchuyen = $_POST["taikhoanid"];
 	$code = taocode(4);
-	$mail = new guimail("11");
+	$mail = new guimail($_SESSION["khachhangid"]);
 	$mail->gui($conn,$code);
 	$passerr ="" ;
 	echo $code ;
@@ -51,7 +51,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 
 	$loi = 0 ;
 	   if(isset($_POST["pay2"]))
-  {   $sql ="SELECT * FROM khachhang where khachhangid='11'";
+  {   $sql ="SELECT * FROM khachhang where khachhangid=$_SESSION[khachhangid]";
       $results_3 = $control->query($sql);
       $arrpayment1 = $control->fetch_arr($results_3);
    
@@ -71,15 +71,17 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	          if ($nguoinhan_1 != "" ) {
 				  $demnguoinhan++;
 				  echo $nguoinhan_1 ;
-				 $a= $tien->chuyen($nguoinhan_1,$_POST["amt"],$_POST["noidung"]);
+				 $a= @$tien->chuyen($nguoinhan_1,$_POST["amt"],$_POST["noidung"]);
 				 if ($a == 1) $demchuyentienthanhcong++;	
-				 if ($_POST["nguoichiuphi"] == 1)$b = $tien->trutiennguoichuyen();
+				 if ($_POST["nguoichiuphi"] == 1)$b = @			$tien->trutiennguoichuyen();
 	             else $b = $tien->trutiennguoinhan($nguoinhan_1);   
 	             if (  $b == 1) $demtruphi++;
 		            }   
 		}
-		if ($demchuyentienthanhcong == $demnguoinhan and $demtruphi == $demnguoinhan)header("Location: formchuyentien3.php");
-		            	    	  
+		if ($demchuyentienthanhcong == $demnguoinhan and $demtruphi == $demnguoinhan){
+			unset($_SESSION['nguoinhan']);
+			header("Location: formchuyentien3.php");}
+																					 
 	}
 	else
 	{
