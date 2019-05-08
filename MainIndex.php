@@ -1,7 +1,7 @@
 <div id="center">
 			<div id="left">
 				<div id="left_1">
-					<span><marquee>Giá vàng giao ngay thế giới 9h15' ngày 21/11: 147,32&nbsp;USD/chỉ. Giá vàng 9999 tại Hà Nội 8h57' ngày 21/11 mua: 3.643&nbsp;nghìn đồng/chỉ, bán: 3.661&nbsp;nghìn đồng/chỉ. Chỉ số chứng khoán ngày 21/11: VN-Index: 922,56</marquee></span>
+					
 					<iframe src="slide.html" style=" width: 770px;height: 400px; margin: auto; border: 0;" scrolling="no"></iframe>
 				</div>
 				<div id="left_2">
@@ -38,35 +38,13 @@
 				</div>
 				<div id="left_3">
 					<div id="left_33">
-						<a href="Tintuc.html"><h1>TIN TỨC - SỰ KIỆN</h1></a>
-						<ul>
-							<a href="Chitiettintuc.html"><li>S&TBank hỗ trợ khách hàng chuyển đổi số điện thoại từ 11 số sang 10 số trên kênh website<i> (20/11/2018)</i></li></a>
-							<a href="Chitiettintuc.html"><li>S&TBank kỷ niệm 30 năm thành lập và đón nhận các phần thưởng cao quý của Đảng và Nhà nước<i> (18/11/2018)</i></li></a>
-							<a href="Chitiettintuc.html"><li>Bồi dưỡng nghiệp vụ đảm bảo an ninh, an toàn tài sản<i> (12/11/2018)</i></li></a>
-							<a href="Chitiettintuc.html"><li>S&TBank tổ chức trao giải thi đua bán SPDV bán lẻ quý III/2018 và hội thảo "VCB BANCAS" khu vực miền Bắc<i> (10/11/2018)</i></li></a>
-							<a href="Chitiettintuc.html"><li>Thư của ban biên tập bản tin chung niềm tin mời viết bài cho số xuân Kỷ Hợi năm 2019<i> (05/11/2018)</i></li></a>
-							<a href="Chitiettintuc.html"><li>S&TBank chào đón Tân Sinh Viên - Dấu ấn khó phai trong hành trình 5 năm<i> (01/11/2018)</i></li></a>
-							<a href="Chitiettintuc.html"><li>S&TBank kỉ niệm hành trình 5 năm chặng đường<i> (30/10/2018)</i></li></a>
-						</ul>
-						<div id="left_3333"><a href="Tintuc.html"><i>Xem thêm...</i></a></div>
+						
+						
 					</div>
 					<div id="left_333">
-						<a href="Tintuc.html"><h1>KHUYẾN MÃI</h1></a>
-						<ul type="none">
-							<li>
-								<a href="Tintuc.html"><img src="hinh/km1.jpg"></a>
-								<div><a href="Tintuc.html">Mua sắm tại Lotte Department Store được tặng đến 500.000 VND</a></div>
-							</li>
-							<li>
-								<a href="Tintuc.html"><img src="hinh/km2.jpg"></a>
-								<div><a href="Tintuc.html">Ưu đãi hấp dẫn dành cho chủ thẻ JCB ST & Bank</a></div>
-							</li>
-							<li>
-								<a href="Tintuc.html"><img src="hinh/km3.jpg"></a>
-								<div><a href="Tintuc.html">Miễn lãi trả góp học phí tại APAX LEADERS</a></div>
-							</li>
-						</ul>
-						<div id="left_33333"><a href="Tintuc.html"><i>Xem thêm...</i></a></div>
+						
+							
+						
 					</div>
 				</div>
 			</div>

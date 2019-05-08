@@ -7,16 +7,22 @@ session_start();
 require ("DBconnect.php");
 	$passerr="";
 	 $dem = 0 ;
-   if(isset($_POST["taikhoan"])) $taikhoanid = $_POST["taikhoan"];
-   else $taikhoanid = $_SESSION[taikhoanid]; 
+   if(isset($_POST["taikhoan"])  and $_POST["taikhoan"] != "") $taikhoanid = $_POST["taikhoan"];
+   else {
+	   
+	   $sql11 = "select * from taikhoan where id_taikhoan = $_SESSION[taikhoanid]";
+		$q = $control->query($sql11);
+		$p = $control->fetch_arr($q);
+	   
+	   $taikhoanid = $p["taikhoanid"]; 
 
-
-   $sql = "SELECT * FROM taikhoantietkiem where taikhoanid=$taikhoanid" ;				
+   }
+   $sql = "SELECT * FROM taikhoantietkiem where taikhoanid='$taikhoanid'" ;				
    $results_1 = $control->query($sql);			
    if($rowsacc = $control->fetch_arr($results_1))
 	{
 	$passerr="";
-		$sql11 = "select * from taikhoantietkiem where taikhoanid = $taikhoanid" ;
+		$sql11 = "select * from taikhoantietkiem where taikhoanid = '$taikhoanid'" ;
 		$q = $control->query($sql11);
 		$p = $control->fetch_arr($q);
 	    
@@ -39,7 +45,7 @@ require ("DBconnect.php");
 		
 		$kt = 0;
 		$demthanhcong=0;
-		$sql11 = "update taikhoan set sodu = sodu + $p[tiengui] where taikhoanid = $taikhoanid" ;
+		$sql11 = "update taikhoan set sodu = sodu + $p[tiengui] where taikhoanid = '$taikhoanid'" ;
 		$j = $control->query($sql11);
 		$i = $control->row_affected();
 		if ($i == 1) $demthanhcong++;
@@ -48,7 +54,7 @@ require ("DBconnect.php");
 		
        if (strtotime($thatday) <= strtotime($today)){
 		 $laixuat =  $p["tiengui"]*$n["laixuat"];     
-		 $sql11 = "update taikhoan set sodu = sodu +$laixuat where taikhoanid = $taikhoanid " ;
+		 $sql11 = "update taikhoan set sodu = sodu +$laixuat where taikhoanid = '$taikhoanid '" ;
 		 $j = $control->query($sql11);
 		 $i = $control->row_affected();
 		 if ($i == 1) $demthanhcong++;
@@ -57,7 +63,7 @@ require ("DBconnect.php");
 		
 		
 		
- 		$sql11 = "delete from taikhoantietkiem where taikhoanid = $taikhoanid" ;
+ 		$sql11 = "delete from taikhoantietkiem where taikhoanid = '$taikhoanid'" ;
 		$j = $control->query($sql11);
 		$i = $control->row_affected();
 		if ($i == 1) $demthanhcong++;
@@ -79,7 +85,7 @@ require ("DBconnect.php");
         	       <select name="taikhoan" id="taikhoan"  onchange="form2.submit()" > 
 					        <option value="11">tài khoản mặc định &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
 				   <?php  
-					    $sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid] and trangthai = 2" ;				
+					    $sql = "SELECT * FROM taikhoan where id_khachhang=$_SESSION[id_khachhang] and trangthai = 2" ;				
                         $results_1 = $control->query($sql);			
                         
 					  while ($rowsacc = $control->fetch_arr($results_1)){
@@ -164,7 +170,7 @@ require ("DBconnect.php");
 				  </tr>
         	    <tr>
         	      <td colspan="2"><div align="right">
-					  <input type="hidden" name="taikhoan" value=" <?php echo $taikhoanid ?>">
+					  <input type="hidden" name="taikhoan" value="<?php echo $taikhoanid ?>">
         	        <input type="submit" name="pay" id="pay" value="ĐỒNG Ý" />
         	      </div></td>
        	        </tr>

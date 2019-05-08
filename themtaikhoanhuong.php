@@ -20,7 +20,7 @@ require ("DBconnect.php");
 		
 		
 		if($h and !$j and $h["trangthai"] == 2){
-		$a = new themtaikhoanhuong('11');
+		$a = new themtaikhoanhuong($_SESSION["id_khachhang"]);
 		$a->them($conn,$_POST["id_them"]);
 	   
 		 

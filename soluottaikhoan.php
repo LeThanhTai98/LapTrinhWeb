@@ -7,7 +7,7 @@ session_start();
 	<?php require("DBconnect.php") ;?>
 	
 	<?php 
-          $sql = "select * from khachhang where khachhangid = $_SESSION[khachhangid]" ;
+          $sql = "select * from khachhang where id_khachhang = $_SESSION[id_khachhang]" ;
          $resu = $control->query($sql);
          $arr = $control->fetch_arr($resu);
 
@@ -17,7 +17,7 @@ session_start();
 	while($arrow = mysqli_fetch_array($results,MYSQLI_ASSOC)){
 		$ngaytao = $arrow["ngaytao"];
 		$sodu = $arrow["sodu"];
-		$khachhangid = $arrow["khachhangid"];
+		$id_khachhang = $arrow["id_khachhang"];
 		$trangthai = $arrow["trangthai"];
 		$taikhoanid = $arrow["taikhoanid"];
 		$i = 1;

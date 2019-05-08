@@ -6,11 +6,11 @@ require ("DBconnect.php");
 		
 	if (isset($_POST["pay"])){
 		$passerr = "";
-		$sql = "select * from khachhang  where khachhangid =$_SESSION[khachhangid]";
+		$sql = "select * from khachhang  where id_khachhang =$_SESSION[id_khachhang]";
 		$a = $control->query($sql);
 		$b = $control->fetch_arr($a);
 	 if($_POST["pass"] == $b["pass"] and $_POST["email"] == $_POST["code"] and $_POST["passmoi"]==$_POST["passlai"]){	
-		 $sql = "UPDATE khachhang SET pass = $_POST[passmoi] where khachhangid = $_SESSION[khachhangid]";
+		 $sql = "UPDATE khachhang SET pass = $_POST[passmoi] where id_khachhang = $_SESSION[id_khachhang]";
 		$a = $control->query($sql);
 		if ($control->row_affected() == 1)header("Location: formchuyentien3.php");
 		else echo "co gi sai";																						

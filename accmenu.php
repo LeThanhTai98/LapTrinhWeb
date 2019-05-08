@@ -12,7 +12,7 @@
 					<li><a href="acctrangchu.php?ts=ctgd">chi tiết giao dịch</a> </li>
 					<li> <a href="acctrangchu.php?ts=dp">đổi pass </a></li>
 					<li> <a href="acctrangchu.php?ts=md">cài đặt tài khoản mặc định </a></li>
-					
+					<li>  <a href="acctrangchu.php?ts=tkh">thêm tài khoản hưởng</a></li>
 					</ul>	
 			   </div>
 			
@@ -55,7 +55,7 @@
 					<li><a href="acctrangchu.php?ts=th0">danh sách thẻ </a> </li>	 
 					<li> <a href="acctrangchu.php?ts=th1">chuyền tiền vào tài khoản</a></li>
 					<li><a href="acctrangchu.php?ts=th2">chuyển tiền vào thẻ</a> </li>
-					<li><a href="acctrangchu.php?ts=th3">thanh toán thẻ tín dụng </a> </li>
+					
 						 
 					</ul>
 			

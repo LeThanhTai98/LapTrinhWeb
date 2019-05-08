@@ -23,7 +23,9 @@ session_start();
 	width: 290px;
 		height: 35px; }</style>
 </head>
-	<body>
+	
+		<body bgcolor="lightblue" >
+	<div id="khung" >
 		<?php require("Header.php") ;?>
 	 <?php require ("accmenu.php") ;
 		require ("DBconnect.php");
@@ -34,7 +36,7 @@ session_start();
     $vayamt = $_POST["vay_amt"];
     $taikhoanvay = $_POST["taikhoanid"];
 	$code = taocode(4);
-	$mail = new guimail($_SESSION["khachhangid"]);
+	$mail = new guimail($_SESSION["id_khachhang"]);
 	$mail->gui($conn,$code);
 	$passerr ="" ;
 	echo $code ;
@@ -54,7 +56,7 @@ session_start();
 		
 		
 	   if(isset($_POST["pay2"]))
-  {   $results_3 = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid=$_SESSION[khachhangid]");
+  {   $results_3 = mysqli_query($conn,"SELECT * FROM khachhang where id_khachhang=$_SESSION[id_khachhang]");
       $arrpayment1 = mysqli_fetch_assoc($results_3);	
    
    
@@ -170,5 +172,6 @@ session_start();
 		} 
 		?>
 		<?php require("Footer.php") ;?>
-  </body>
+ </div>
+</body>
 </html>

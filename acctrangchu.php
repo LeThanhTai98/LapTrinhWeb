@@ -64,7 +64,8 @@
 						  break ;
 					  case "th0" : require("danhsachthe.php");
 						  break;
-						  
+					  case "tkh" :require("themtaikhoanhuong.php");
+						  break ;
 				  }
 		 else require("soluottaikhoan.php");
 		?>

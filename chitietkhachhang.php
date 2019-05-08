@@ -4,13 +4,13 @@
 	
 	<?php 
 	   
-		$results = mysqli_query($conn,"SELECT * FROM khachhang where khachhangid=$_SESSION[khachhangid]");
+		$results = mysqli_query($conn,"SELECT * FROM khachhang where id_khachhang=$_SESSION[id_khachhang]");
 	while($arrow = mysqli_fetch_array($results,MYSQLI_ASSOC)){
 		$ngaytao = $arrow["ngaytao"];
 		$ho = $arrow["ho"];
 		$ten = $arrow ["ten"];
 		$loginid = $arrow["loginid"];
-		$khachhangid = $arrow["khachhangid"];
+		$id_khachhang = $arrow["id_khachhang"];
 		$trangthai = $arrow["trangthai"];
 		$email = $arrow ["email"];
 		
@@ -25,7 +25,7 @@
    		     </tr>
 				 <tr>
      		     <td height="37"> MÃ KHÁCH HÀNG</td>
-     		     <td>&nbsp;<?php echo $khachhangid; ?></td>
+     		     <td>&nbsp;<?php echo $id_khachhang; ?></td>
    		     </tr>
      		<tr>
      		     <td height="37"> HỌ TÊN</td>

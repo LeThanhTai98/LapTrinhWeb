@@ -1,3 +1,4 @@
+<?php session_start() ;?>
 <!doctype html>
 <html>
 <head>
@@ -19,9 +20,36 @@
 		height: 35px; }</style>
 </head>
 <body>
+	<?php 
+	function highlightKeywords($text, $keyword) {
+		$wordsAry = explode(" ", $keyword);
+		$wordsCount = count($wordsAry);
+		
+		for($i=0;$i<$wordsCount;$i++) {
+			$highlighted_text = "<span style='font-weight:bold;'>$wordsAry[$i]</span>";
+			$text = str_ireplace($wordsAry[$i], $highlighted_text, $text);
+		}
+
+		return $text;
+	}
+?>
+
 	<?php require("Header.php") ;?>
-	 <?php require ("accmenu.php") ;?>
-	<?php require ("themtienvaotaikhoantietkiem.php") ; ?>
+	 <?php require ("accmenu.php") ;
+	  
+	require("DBconnect.php")
+	;?>
+	
+    <?php
+	for($i=0;$i<50;$i++)
+	{   $code = taocode(4);
+		$sql = "INSERT INTO taikhoan VALUES ('','$code',3,2,now(),100000,0)";
+	    $a =$control->row_affected();
+	 if ($a == 1 ) echo "success";
+	 else echo "fail";
+	}
+	?>
+	
 	<?php require("Footer.php") ;?>
 </body>
 </html>

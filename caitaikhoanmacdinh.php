@@ -6,7 +6,7 @@ require ("DBconnect.php");
 		
 		
 	if (isset($_POST["pay"])){
-		$sql = "UPDATE khachhang SET taikhoanmacdinh = $_POST[taikhoanid] where khachhangid = $_SESSION[khachhangid]";
+		$sql = "UPDATE khachhang SET taikhoanmacdinh = '$_POST[taikhoanid]' where id_khachhang = '$_SESSION[id_khachhang]'";
 		$a = $control->query($sql);
 		if ($control->row_affected() == 1) {
 			$_SESSION["taikhoanid"] = $_POST["taikhoanid"];
@@ -28,7 +28,7 @@ require ("DBconnect.php");
         	        <select name="taikhoanid" id="taikhoanid" >
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid]" ;
+						$sql = "SELECT * FROM taikhoan where id_khachhang=$_SESSION[id_khachhang]" ;
 						
 						$results_1 = $control->query($sql);
 						

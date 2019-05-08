@@ -67,9 +67,9 @@ if (!$conn) {
 		public function chuyen ($id_nguoinhan,$tienchuyen,$noidung){
 			
 			$khach = $this->taikhoanid ;
-			$sql1 ="UPDATE taikhoan SET sodu = sodu + $tienchuyen WHERE taikhoanid = $id_nguoinhan";
-			$sql2 ="UPDATE taikhoan SET sodu = sodu - $tienchuyen WHERE taikhoanid = $khach";
-			$sql3 ="INSERT INTO chuyentien VALUES('',now(),$khach,$id_nguoinhan,$tienchuyen,'$noidung')";
+			$sql1 ="UPDATE taikhoan SET sodu = sodu + $tienchuyen WHERE taikhoanid = '$id_nguoinhan'";
+			$sql2 ="UPDATE taikhoan SET sodu = sodu - $tienchuyen WHERE taikhoanid = '$khach'";
+			$sql3 ="INSERT INTO chuyentien VALUES('',now(),'$khach','$id_nguoinhan',$tienchuyen,'$noidung')";
 			$a = $this->query($sql1);
 			$b = $this->query($sql2);
 			$c = $this->query($sql3);
@@ -93,7 +93,7 @@ if (!$conn) {
 	   }
 		public function trutiennguoichuyen (){
 			$khach = $this->taikhoanid ;
-			$sql2 ="UPDATE taikhoan SET sodu = sodu - $this->phichuyen WHERE taikhoanid = $khach";
+			$sql2 ="UPDATE taikhoan SET sodu = sodu - $this->phichuyen WHERE taikhoanid = '$khach'";
 			$a = $this->query($sql2);
 			if(mysqli_affected_rows($this->getCon()) == 1)
 				  {
@@ -108,7 +108,7 @@ if (!$conn) {
 			
 		}
 		public function trutiennguoinhan ($id_nguoinhan){
-			$sql2 ="UPDATE taikhoan SET sodu = sodu - $this->phichuyen WHERE taikhoanid = $id_nguoinhan";
+			$sql2 ="UPDATE taikhoan SET sodu = sodu - $this->phichuyen WHERE taikhoanid = '$id_nguoinhan'";
 			$a = $this->query($sql2);
 			if(mysqli_affected_rows($this->getCon()) == 1)
 				  {
@@ -137,7 +137,7 @@ if (!$conn) {
 		}
 	  public function gui ($con,$maXN){
 		  $khach = $this->khachhangid ;
-		  $res = mysqli_query($con,"SELECT * FROM khachhang where khachhangid=$khach");
+		  $res = mysqli_query($con,"SELECT * FROM khachhang where id_khachhang='$khach'");
           $arrpayment = mysqli_fetch_assoc($res);
 		  $to = $arrpayment["email"];
           $subject = "mã xác nhận email";
@@ -179,7 +179,7 @@ function taocode($length) {
 	      $array_4 = mysqli_fetch_assoc($results_4);
 		  $b = $array_4["id_kieuvay"];
 		  $c = $array_4["laixuat"];
-		  $sql1 ="UPDATE taikhoan SET sodu = sodu + $tienvay WHERE taikhoanid = $khach";
+		  $sql1 ="UPDATE taikhoan SET sodu = sodu + $tienvay WHERE taikhoanid = '$khach'";
           $sql2 ="INSERT INTO vaytien VALUES('',$b,$tienvay,$c,now(),$khach)";
           if (!mysqli_query($con,$sql1))
 				  {
@@ -233,3 +233,17 @@ class themtaikhoanhuong extends class_coban{
 	}
 }
 ?>
+<?php 
+	function highlightKeywords($text, $keyword) {
+		$wordsAry = explode(" ", $keyword);
+		$wordsCount = count($wordsAry);
+		
+		for($i=0;$i<$wordsCount;$i++) {
+			$highlighted_text = "<span style='font-weight:bold;'>$wordsAry[$i]</span>";
+			$text = str_ireplace($wordsAry[$i], $highlighted_text, $text);
+		}
+
+		return $text;
+	}
+?>
+	

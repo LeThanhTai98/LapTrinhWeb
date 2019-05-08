@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style type="text/css">
+    * {
+  box-sizing:border-box
+}
+h2 {
+  text-align: center;
+}
+
+.slideshow-container {
+  width: 770px;height: 400px;
+}
+
+.mySlides {
+    display: none;
+}
+
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+ 
+
+.dot {
+  cursor:pointer;
+  height: 13px;
+  width: 13px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+ 
+
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 3s;
+  animation-name: fade;
+  animation-duration: 3s;
+}
+ .dot2{
+  text-align: center; 
+  padding-top: 380px;
+ }
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+ 
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+.img1{
+  width: 770px;height: 400px; background-repeat: no-repeat;background-size: cover;z-index: -1;position: absolute;
+}
+  </style>
+</head>
+<body style="margin-left: 0;margin-top: 0;">
+  
+<div class="slideshow-container" >
+  <div class="mySlides fade img1" style="background-image: url(hinh/center_1.jpg);">
+    
+  </div>
+  <div class="mySlides fade img1" style="background-image: url(hinh/center_2.jpg);">
+  
+  </div>
+  <div class="mySlides fade img1"style="background-image: url(hinh/center_3.jpg);"> 
+   
+  </div>
+  <div class="mySlides fade img1"style="background-image: url(hinh/center_4.jpg);"> 
+   
+  </div>
+  <div class="mySlides fade img1"style="background-image: url(hinh/center_5.jpg);"> 
+   
+  </div>
+  <div class="mySlides fade img1"style="background-image: url(hinh/center_6.jpg);"> 
+   
+  </div>
+  <div class="mySlides fade img1"style="background-image: url(hinh/center_7.jpg);"> 
+   
+  </div>
+  <div class="mySlides fade img1"style="background-image: url(hinh/center_8.jpg);"> 
+   
+  </div>
+<div class=" dot2" >
+  <span class="dot" onclick="currentSlide(0)"></span> 
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+  <span class="dot" onclick="currentSlide(4)"></span> 
+  <span class="dot" onclick="currentSlide(5)"></span> 
+  <span class="dot" onclick="currentSlide(6)"></span> 
+  <span class="dot" onclick="currentSlide(7)"></span> 
+ </div>
+<script>
+      
+      var slideIndex;
+      var start ;
+      function showSlides() {
+          var i;
+          var slides = document.getElementsByClassName("mySlides");
+          var dots = document.getElementsByClassName("dot");
+          for (i = 0; i < slides.length; i++) {
+             slides[i].style.display = "none";  
+          }
+          for (i = 0; i < dots.length; i++) {
+              dots[i].className = dots[i].className.replace(" active", "");
+          }
+
+          slides[slideIndex].style.display = "block";  
+          dots[slideIndex].className += " active";        
+          slideIndex++;          
+          if (slideIndex > slides.length - 1) {
+            slideIndex = 0
+          }    
+          
+           start = setTimeout(showSlides, 5000);
+      }
+      showSlides(slideIndex = 0);
+      function currentSlide(n) {
+        clearTimeout(start) ;
+        showSlides(slideIndex = n);
+
+      }
+    </script>
+</body>
+</html>

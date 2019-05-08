@@ -39,21 +39,21 @@ require ("DBconnect.php");
 $passerr="";
 	if (isset($_POST["pay"])){
 		$dem=0;
-		$sql1 = "select * from kyhanguitien where id_kyhan = $_POST[kyhan] ";
+		$sql1 = "select * from kyhanguitien where id_kyhan = '$_POST[kyhan]'";
 		$a = $control->query($sql1);
 		$b = $control->fetch_arr($a);
 		
-		$sql11 = "select * from taikhoan where taikhoanid = $_POST[taikhoanid]" ;
+		$sql11 = "select * from taikhoan where taikhoanid = '$_POST[taikhoanid]'" ;
 		$j = $control->query($sql11);
 		$i = $control->fetch_arr($j);
 		
-		$sql22 = "select * from taikhoantietkiem where taikhoanid = $_POST[taikhoanid]";
+		$sql22 = "select * from taikhoantietkiem where taikhoanid = '$_POST[taikhoanid]'";
 		$h = $control->query($sql22);
 		$k = $control->fetch_arr($h);	
 			
 		if ($i["sodu"] >= $_POST["gui_amt"] and $_POST["gui_amt"] != 0 and !$k){	
 			
-		$sql = "INSERT INTO taikhoantietkiem VALUES('',$_POST[taikhoanid],$_POST[kyhan],$_POST[gui_amt],$_POST[hinhthuc],now(),DATE_ADD(
+		$sql = "INSERT INTO taikhoantietkiem VALUES('','$_POST[taikhoanid]',$_POST[kyhan],$_POST[gui_amt],$_POST[hinhthuc],now(),DATE_ADD(
 		now(),INTERVAL $b[kyhan_so] DAY))";
 			
 		$a_resu = $control->query($sql);
@@ -103,7 +103,7 @@ $passerr="";
         	        <select name="taikhoanid" id="taikhoanid" >
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[khachhangid] and trangthai = 2" ;
+						$sql = "SELECT * FROM taikhoan where id_khachhang=$_SESSION[id_khachhang] and trangthai = 2" ;
 						
 						$results_1 = $control->query($sql);
 						

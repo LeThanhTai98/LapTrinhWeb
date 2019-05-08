@@ -22,7 +22,8 @@ session_start();
 	width: 290px;
 		height: 35px; }</style>
 </head>
-	<body>
+	<body bgcolor="lightblue" >
+	<div id="khung" >
 		<?php require("Header.php") ;?>
 	 <?php require ("accmenu.php") ;
 		require ("DBconnect.php");
@@ -33,7 +34,7 @@ $_SESSION['nguoinhan'] = $_POST["huongid"];
 $payamt = $_POST["pay_amt"];
 $taikhoanchuyen = $_POST["taikhoanid"];
 	$code = taocode(4);
-	$mail = new guimail($_SESSION["khachhangid"]);
+	$mail = new guimail($_SESSION["id_khachhang"]);
 	$mail->gui($conn,$code);
 	$passerr ="" ;
 	echo $code ;
@@ -51,7 +52,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 
 	$loi = 0 ;
 	   if(isset($_POST["pay2"]))
-  {   $sql ="SELECT * FROM khachhang where khachhangid=$_SESSION[khachhangid]";
+  {   $sql ="SELECT * FROM khachhang where id_khachhang=$_SESSION[id_khachhang]";
       $results_3 = $control->query($sql);
       $arrpayment1 = $control->fetch_arr($results_3);
    
@@ -139,7 +140,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
                     $sql ="SELECT * FROM taikhoan where taikhoanid=$nguoinhan_1"; 	
 						$resu = $control->query($sql);
 					  $arr = $control->fetch_arr($resu);
-					$sql2 ="SELECT * FROM khachhang where khachhangid=$arr[khachhangid]"; 	
+					$sql2 ="SELECT * FROM khachhang where id_khachhang=$arr[id_khachhang]"; 	
 						$resu2 = $control->query($sql2);
 						$arr2 = $control->fetch_arr($resu2);
 				echo "<br><b>&nbsp;TÊN : </b>".$arr2["ho"]."  ".$arr2["ten"];
@@ -197,5 +198,6 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 		else echo " da xay ra loi xin hay kiem tra lai thong tin nhap "; 
 		?>
 		<?php require("Footer.php") ;?>
-  </body>
+</div>
+</body>
 </html>

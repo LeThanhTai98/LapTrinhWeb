@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!doctype html>
 <html>
 <head>
@@ -13,7 +15,7 @@ require ("DBconnect.php");
 	
 	$passerr="";
 	 $dem = 0 ;
-   $sql = "SELECT * FROM thenganhang where khachhangid=$_SESSION[khachhangid]" ;				
+   $sql = "SELECT * FROM thenganhang where id_khachhang=$_SESSION[id_khachhang]" ;				
    $results_1 = $control->query($sql);			
    if($rowsacc = $control->fetch_arr($results_1))
 	{
@@ -22,7 +24,7 @@ require ("DBconnect.php");
    
 	if (isset($_POST["pay"])){
 		
-		$sql11 = "select * from taikhoan where taikhoanid = $_POST[taikhoanid] and trangthai = 2" ;
+		$sql11 = "select * from taikhoan where id_taikhoan = $_POST[taikhoanid] and trangthai = 2" ;
 		$j = @$control->query($sql11);
 		$i = @$control->fetch_arr($j);
 		
@@ -96,7 +98,7 @@ else $dem = 1 ;
         	        <select name="theid" id="theid"   >
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$sql = "SELECT * FROM thenganhang where khachhangid=$_SESSION[khachhangid] " ;
+						$sql = "SELECT * FROM thenganhang where id_khachhang=$_SESSION[id_khachhang] " ;
 						
 						$results_1 = $control->query($sql);
 						
@@ -116,7 +118,7 @@ else $dem = 1 ;
         	        <select name="taikhoanid" id="taikhoanid"   >
                              <option value="">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </option>
         	 			<?php
-						$sql = "SELECT * FROM taikhoan where khachhangid=$_SESSION[taikhoanid] and trangthai = 2 " ;
+						$sql = "SELECT * FROM taikhoan where id_khachhang=$_SESSION[id_khachhang] and trangthai = 2 " ;
 						
 						$results_1 = $control->query($sql);
 						

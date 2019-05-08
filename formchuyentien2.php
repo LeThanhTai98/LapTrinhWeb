@@ -32,7 +32,7 @@ $nguoinhan = $_POST["payto"];
 $payamt = $_POST["pay_amt"];
 $taikhoanchuyen = $_POST["taikhoanid"];
 	$code = taocode(4);
-	$mail = new guimail($_SESSION["khachhangid"]);
+	$mail = new guimail($_SESSION["id_khachhang"]);
 	$mail->gui($conn,$code);
 	$passerr ="" ;
 	echo $code ;
@@ -50,11 +50,18 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 
 	$loi = 0 ;
 	   if(isset($_POST["pay2"]))
-  {   $sql3 = "SELECT * FROM khachhang where khachhangid=$_SESSION[khachhangid]";
+  {   
+	  $nguoinhan = $_POST["payto3"]	  ; 
+	  $sql3 = "SELECT * FROM khachhang where id_khachhang=$_SESSION[id_khachhang]";
 	  $results_3 = $control->query($sql3);
       $arrpayment1 = $control->fetch_arr($results_3);
    
-    $sql11 = "select * from taikhoan where taikhoanid = $_POST[taikhoanid]" ;
+   
+   
+   
+   
+   
+    $sql11 = "select * from taikhoan where taikhoanid = '$_POST[taikhoanid]'" ;
 		$j = $control->query($sql11);
 		$i = $control->fetch_arr($j);
     
@@ -74,7 +81,8 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	    if ($a == 1 and $b == 1) header("Location: formchuyentien3.php");
 	}
 	else
-	{
+	{   
+		echo "loi day ";
 		$err1 = "";
 		$err2 = "";
 	if ($_POST["trpass"] != $arrpayment1["passchuyenkhoan"]) $err1 = "<b>mật khẩu chuyển khoản không đúng</b>";
@@ -93,7 +101,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	}		  
 }       
 		if(isset($nguoinhan) and $nguoinhan != ""){
-		$sql = "SELECT * FROM taikhoan where taikhoanid=$nguoinhan" ;
+		$sql = "SELECT * FROM taikhoan where taikhoanid='$nguoinhan'" ;
 		$results_1 = $control->query($sql);
 		$array = $control->fetch_arr($results_1);
 		if (!isset($array["taikhoanid"]))
@@ -103,9 +111,9 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 		}
 		else {
 			
-	    $results = mysqli_query($conn,"SELECT * FROM taikhoan where taikhoanid='11'");
-        $nguoinhan_1 = $array["khachhangid"];
-		$sql2 = "SELECT * FROM khachhang where khachhangid=$nguoinhan_1" ;
+	   
+        $nguoinhan_1 = $array["id_khachhang"];
+		$sql2 = "SELECT * FROM khachhang where id_khachhang=$nguoinhan_1" ;
 	    $results_2 = $control->query($sql2);	
 	    $arrpayment = $control->fetch_arr($results_2);
 		}
@@ -179,7 +187,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
                 <tr>
                   <td colspan="2"><div align="right">
                     <input type="submit" name="pay2" id="pay2" value="Pay" />
-                    <input name="button" type="button"  value="Cancel" alt="Pay Now" />
+                   
                   </div></td>
                 </tr>
               </table>

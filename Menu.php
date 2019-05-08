@@ -5,7 +5,7 @@
 				<li><a href="InDex.php?ts=cn"><b>CÁ NHÂN</b></a></li>
 				<li><a href="InDex.php?ts=dn"><b>DOANH NGHIỆP</b></a></li>
 				<li><a href="InDex.php?ts=ndt"><b>NHÀ ĐẦU TƯ</b></a></li>
-				<li><a href="InDex.php?ts=td"><b>TUYỂN DỤNG</b></a></li>
-				<li><a href="InDex.php?ts=tt"><b>TIN TUC</b></a></li>
+				<li style=" width: 300px"><a href="InDex.php?ts=bk"><b>INTERNET BANKING</b></a></li>
+				
 			</ul>
 		</div>
