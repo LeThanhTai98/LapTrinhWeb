@@ -57,10 +57,11 @@ $taikhoanchuyen = $_POST["taikhoanid"];
       $arrpayment1 = $control->fetch_arr($results_3);
    
   
-    
+    //chuyen phai nguoi dung nhap sang harsh-password
+	$auth = password_verify($_POST["trpass"],$arrpayment1["passchuyenkhoan"]);	
 		
 		
-	if($_POST["trpass"] == $arrpayment1["passchuyenkhoan"] and $_POST["email"] == $_POST["code"])
+	if($auth and $_POST["email"] == $_POST["code"])
 	{   
 		$tien = new chuyentien($_POST["taikhoanid"]);
 		$tien->setCon($conn);
@@ -88,9 +89,9 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	{
 		$err1 = "";
 		$err2 = "";
-	if ($_POST["trpass"] != $arrpayment1["passchuyenkhoan"]) $err1 = "<b>mật khẩu chuyển khoản không đúng</b>";
-	if ($_POST["email"] != $_POST["code"])	$err2 = "<b> mã xác nhận email không đúng</b>";
-	$passerr = $err1." ; ".$err2." <br>vui lòng nhập lại";
+	if (!$auth) $err1 = "<b> <br>mật khẩu chuyển khoản không đúng</b>";
+	if ($_POST["email"] != $_POST["code"])	$err2 = "<b>  <br>mã xác nhận email không đúng</b>";
+	$passerr = $err1.$err2." <br>vui lòng nhập lại";
 
 	
 	$payamt = $_POST["amt"];

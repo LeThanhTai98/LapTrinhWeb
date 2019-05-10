@@ -20,19 +20,7 @@
 		height: 35px; }</style>
 </head>
 <body>
-	<?php 
-	function highlightKeywords($text, $keyword) {
-		$wordsAry = explode(" ", $keyword);
-		$wordsCount = count($wordsAry);
-		
-		for($i=0;$i<$wordsCount;$i++) {
-			$highlighted_text = "<span style='font-weight:bold;'>$wordsAry[$i]</span>";
-			$text = str_ireplace($wordsAry[$i], $highlighted_text, $text);
-		}
-
-		return $text;
-	}
-?>
+	
 
 	<?php require("Header.php") ;?>
 	 <?php require ("accmenu.php") ;
@@ -41,14 +29,44 @@
 	;?>
 	
     <?php
-	for($i=0;$i<50;$i++)
-	{   $code = taocode(4);
-		$sql = "INSERT INTO taikhoan VALUES ('','$code',3,2,now(),100000,0)";
-	    $a =$control->row_affected();
-	 if ($a == 1 ) echo "success";
-	 else echo "fail";
+	$sql = "SELECT @@event_scheduler";
+	$kq = $control->query($sql);
+	$arr = $control->fetch_arr($kq);
+	foreach($arr as $tem){
+		echo $tem ;
 	}
+	$sql = "CREATE EVENT IF NOT EXISTS event_tienvay 
+	        ON SCHEDULE EVERY 1 DAY 
+			DO 
+			UPDATE vaytien a JOIN taikhoan b ON u.taikhoanid = b.taikhoanid set no = no + sovay*laixuat ";
+	$kq = $control->query($sql);
+	$sql ="SHOW EVENTS FROM test";
+	$kq = $control->query($sql);
+	while ($arr = $control->fetch_arr($kq))
+	foreach($arr as $tem){
+		echo $tem ;
+	}
+	
+	
+	/*$sql= "select * from khachhang";
+	$kq = $control->query($sql);
+	while ($arr = $control->fetch_arr($kq)){
+		$pass = '2';	
+		$harsh =password_hash($pass,PASSWORD_DEFAULT);
+		echo $harsh."<br>";
+		$sql = "update khachhang set pass = '$harsh' where khachhangid = '$arr[khachhangid]'";
+		$control->query($sql);
+		if ($control->row_affected() == 1) echo "success";
+		$harsh_1 = $control->passharsh($pass);
+		$sql = "update khachhang set passchuyenkhoan = '$harsh_1' where khachhangid = '$arr[khachhangid]'";
+		$control->query($sql);
+		if ($control->row_affected() == 1) echo "success";
+	}*/
 	?>
+	
+	
+	
+	
 	
 	<?php require("Footer.php") ;?>
 </body>

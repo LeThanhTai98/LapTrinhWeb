@@ -8,7 +8,7 @@ session_start();
 
 
 include("DBconnect.php");
-$loanarray = @mysqli_query($conn,"select * from vaytien where taikhoanid=$_SESSION[taikhoanid]");
+$loanarray = @mysqli_query($conn,"select * from vaytien where taikhoanid='$_SESSION[taikhoanid]'");
 ?>	
 
 

@@ -61,7 +61,7 @@
 				 
 			
 				  if (isset($_GET["timkiem"]) and $_GET["timkiem"] != "" ) { 
-					 $sql .=  " and id_chuyentien like '%$_GET[timkiem]%'";
+					 $sql .=  " and chuyentienid like '%$_GET[timkiem]%'";
 					 $truyendulieu .= "&timkiem=$_GET[timkiem]";
 				 }
 				 
@@ -74,7 +74,7 @@
 	
 	
   $kq = $control->query($sql);
-  $tsp = mysqli_num_rows($kq);
+  $tsp = @mysqli_num_rows($kq);
   $sd = 5 ;
   $sn = 5 ;
   
@@ -126,8 +126,8 @@
 					 
 					
 					 
-					if(isset($_GET["timkiem"]))$HL=highlightKeywords($giaodich["id_chuyentien"],$_GET["timkiem"]);
-	                else $HL=$giaodich["id_chuyentien"];
+					if(isset($_GET["timkiem"]))$HL=highlightKeywords($giaodich["chuyentienid"],$_GET["timkiem"]);
+	                else $HL=$giaodich["chuyentienid"];
 	   
 	   
 					 echo "

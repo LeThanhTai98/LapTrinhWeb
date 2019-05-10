@@ -66,7 +66,7 @@ session_start();
 					 
 					 echo "
                    <tr>
-                    <td>&nbsp;$taikhoan[id_chuyentien]</td>     
+                    <td>&nbsp;$taikhoan[chuyentienid]</td>     
                     <td>&nbsp;$taikhoan[ngaytao]</td>
                     <td>&nbsp;$taikhoan[id_chuyen]</td>
                     <td>&nbsp;$taikhoan[id_nhan]</td>

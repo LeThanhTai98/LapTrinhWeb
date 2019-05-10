@@ -28,6 +28,7 @@
 		?>
 	<?php	if(isset($_POST["pay"]))
 {
+	// gan cac bien can thiet 
 $nguoinhan = $_POST["payto"];
 $payamt = $_POST["pay_amt"];
 $taikhoanchuyen = $_POST["taikhoanid"];
@@ -55,21 +56,20 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	  $sql3 = "SELECT * FROM khachhang where id_khachhang=$_SESSION[id_khachhang]";
 	  $results_3 = $control->query($sql3);
       $arrpayment1 = $control->fetch_arr($results_3);
+       
    
-   
-   
-   
-   
-   
+   //lay tai khoan khach hang muon su dung  
     $sql11 = "select * from taikhoan where taikhoanid = '$_POST[taikhoanid]'" ;
 		$j = $control->query($sql11);
 		$i = $control->fetch_arr($j);
-    
+		   
+    //chuyen phai nguoi dung nhap sang harsh-password
+	$auth = password_verify($_POST["trpass"],$arrpayment1["passchuyenkhoan"]);
+			
 		
-		
-	if($_POST["trpass"] == $arrpayment1["passchuyenkhoan"] and $_POST["email"] == $_POST["code"] and		 $i["sodu"] >= $_POST["amt"])
+	if($auth and $_POST["email"] == $_POST["code"] and $i["sodu"] >= $_POST["amt"])
 	{  
-		
+		//chuyen tien 
 		$tien = new chuyentien($_POST["taikhoanid"]);
 	    $tien->setCon($conn);
 	    $tien->setphichuyen($_POST["phichuyentien"]);
@@ -82,15 +82,16 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 	}
 	else
 	{   
-		echo "loi day ";
+		// neu co loi xuat loi ra 
+		
 		$err1 = "";
 		$err2 = "";
-	if ($_POST["trpass"] != $arrpayment1["passchuyenkhoan"]) $err1 = "<b>mật khẩu chuyển khoản không đúng</b>";
+	if (!$auth) $err1 = "<b>mật khẩu chuyển khoản không đúng</b>";
 	if ($_POST["email"] != $_POST["code"])	$err2 = "<b> mã xác nhận email không đúng</b>";
 	$passerr = $err1." ; ".$err2." <br>vui lòng nhập lại";
     if ($i["sodu"] < $_POST["amt"]) $passerr.=" số tiền trong tài khoản không đủ";
 		
-		
+		// gan lai bien 
 	$nguoinhan = $_POST["payto3"];
 	$payamt = $_POST["amt"];
 	$taikhoanchuyen = $_POST["taikhoanid"];
@@ -106,7 +107,7 @@ $taikhoanchuyen = $_POST["taikhoanid"];
 		$array = $control->fetch_arr($results_1);
 		if (!isset($array["taikhoanid"]))
 		{
-			 echo "loi 1" ;
+			
 		$loi++ ;
 		}
 		else {

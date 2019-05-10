@@ -1,6 +1,6 @@
 
 <?php
- 
+ date_default_timezone_set("Asia/Ho_Chi_Minh");
 class control {
 	private $con ;
 	public function setCon ($conn){
@@ -17,10 +17,14 @@ class control {
 		return mysqli_query($conn,$que) ;
 	}
 	public function fetch_arr($que){
-		return mysqli_fetch_assoc($que);
+		return @mysqli_fetch_assoc($que);
 	}
 	public function row_affected(){
 		return mysqli_affected_rows($this->getCon());
+	}
+	public function passharsh($str){
+		 $harsh = password_hash($str, PASSWORD_DEFAULT);
+		return $harsh;
 	}
 }
 	
@@ -50,7 +54,48 @@ if (!$conn) {
 		}
  }
 ?>
+<?php
+function id_GD (){
+	
+	 $characters = '0123456789';
+    $charactersLength = strlen($characters);
+	$date = getdate();
+	
+	for($i=1;$i<=10;$i++){
+		if($date["mday"] == $i) $date["mday"] = '0'.$date["mday"];
+	}
+	for($i=1;$i<=10;$i++){
+		if($date["mon"] == $i) $date["mon"] = '0'.$date["mon"];
+	}
+    $randomString = 'GD'.$date["mday"].$date["mon"];
+    for ($i = 0; $i < 5; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
 
+?>	
+<?php
+function id_vay (){
+	
+	 $characters = '0123456789';
+    $charactersLength = strlen($characters);
+	$date = getdate();
+	
+	for($i=1;$i<=10;$i++){
+		if($date["mday"] == $i) $date["mday"] = '0'.$date["mday"];
+	}
+	for($i=1;$i<=10;$i++){
+		if($date["mon"] == $i) $date["mon"] = '0'.$date["mon"];
+	}
+    $randomString = 'VT'.$date["mday"].$date["mon"];
+    for ($i = 0; $i < 5; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+?>	
 <?php 
 	class chuyentien extends control {
 		private $taikhoanid ;
@@ -69,7 +114,19 @@ if (!$conn) {
 			$khach = $this->taikhoanid ;
 			$sql1 ="UPDATE taikhoan SET sodu = sodu + $tienchuyen WHERE taikhoanid = '$id_nguoinhan'";
 			$sql2 ="UPDATE taikhoan SET sodu = sodu - $tienchuyen WHERE taikhoanid = '$khach'";
-			$sql3 ="INSERT INTO chuyentien VALUES('',now(),'$khach','$id_nguoinhan',$tienchuyen,'$noidung')";
+			
+			//sinh id tu dong
+			$id = id_GD();
+			$sql= "select id_chuyentien from chuyentien where chuyentien='$id'";
+			$kq = $this->query($sql);
+			while($arr = $this->fetch_arr($kq)){
+				$id = id_GD();
+				$sql= "select id_chuyentien from chuyentien where chuyentien='$id'";
+			    $kq = $this->query($sql);
+			}
+			
+			
+			$sql3 ="INSERT INTO chuyentien VALUES('','$id',now(),'$khach','$id_nguoinhan',$tienchuyen,'$noidung')";
 			$a = $this->query($sql1);
 			$b = $this->query($sql2);
 			$c = $this->query($sql3);
@@ -172,7 +229,7 @@ function taocode($length) {
 			$this->taikhoanid = $id ;
 		}
 	  public function vay ($con,$tienvay,$kieuvay){
-		  date_default_timezone_set('Asia/Ho_Chi_Minh');
+		  
 		  $date = date('d-m-Y');
 		  $khach = $this->taikhoanid ;
 		  $results_4 = mysqli_query($con,"SELECT * FROM kieuvay where id_kieuvay=$kieuvay");
@@ -180,6 +237,16 @@ function taocode($length) {
 		  $b = $array_4["id_kieuvay"];
 		  $c = $array_4["laixuat"];
 		  $sql1 ="UPDATE taikhoan SET sodu = sodu + $tienvay WHERE taikhoanid = '$khach'";
+		  
+		  $id = id_vay();
+			$sql= "select id_vay from vaytien where vayid = '$id'";
+			$kq = $this->query($sql);
+			while($arr = $this->fetch_arr($kq)){
+				$id = id_vay();
+				$sql= "select id_vay from vaytien where vayid = '$id'";
+			    $kq = $this->query($sql);
+			}
+		  
           $sql2 ="INSERT INTO vaytien VALUES('',$b,$tienvay,$c,now(),$khach)";
           if (!mysqli_query($con,$sql1))
 				  {
@@ -246,4 +313,3 @@ class themtaikhoanhuong extends class_coban{
 		return $text;
 	}
 ?>
-	
